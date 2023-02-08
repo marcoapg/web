@@ -1,1 +1,4 @@
 /venv
+__pycache__/bd.cpython-39.pyc
+clase/__pycache__/clase_juego.cpython-39.pyc
+controlador/__pycache__/controlador_juegos.cpython-39.pyc

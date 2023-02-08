@@ -59,11 +59,27 @@ def guardar_juego():
     return redirect("/juegos")
 
 
+# @app.route("/")
+# @app.route("/juegos")
+# def juegos():
+#     juegos = controlador_juegos.obtener_juegos()
+#     return render_template("juegos.html", juegos=juegos)
+
 @app.route("/")
-@app.route("/juegos")
-def juegos():
-    juegos = controlador_juegos.obtener_juegos()
-    return render_template("juegos.html", juegos=juegos)
+@app.route("/inicio")
+def inicio():
+
+    return render_template("maestra.html",title='RSU')
+
+#API'S de inicio para tablas
+
+@app.route("/")
+@app.route("/unidadesorganizacionales")
+def unidadesorganizacionales():
+    unidadesorganizacionales = controlador_juegos.obtener_unidad_organizacional()
+    return render_template("unidadesorganizacionales.html", unidadesorganizacionales=unidadesorganizacionales)
+
+
 
 
 @app.route("/eliminar_juego", methods=["POST"])

@@ -1,0 +1,31 @@
+{% extends "maestra.html" %}
+{% block titulo %} UnidadesOrganizacionales {% endblock %}
+{% block contenido %}
+
+<section class="section">
+    <div class="columns">
+        <div class="column">
+            <h3 class="is-size-3">Unidades Organizacionales</h3>
+            <table class="table">
+                <thead>
+                    <tr>
+                        <th>Id</th>
+                        <th>Descripción</th>
+                        <!-- <th>Editar</th>
+                        <th>Eliminar</th> -->
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for unidadorganizacional in unidadesorganizacionales %}
+                    <tr>
+                        <td>{{unidadorganizacional[0]}}</td>
+                        <td>{{unidadorganizacional[1]}}</td>
+
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+</section>
+{% endblock %}
