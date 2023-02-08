@@ -69,9 +69,9 @@ def guardar_juego():
 @app.route("/inicio")
 def inicio():
 
-    return render_template("maestra.html",title='RSU')
+    return render_template("maestra.html",title='ControlRiesgos')
 
-#API'S de inicio para tablas
+#Main de Tablas - Inicio
 
 @app.route("/")
 @app.route("/unidadesorganizacionales")
@@ -79,8 +79,13 @@ def unidadesorganizacionales():
     unidadesorganizacionales = controlador_juegos.obtener_unidad_organizacional()
     return render_template("unidadesorganizacionales.html", unidadesorganizacionales=unidadesorganizacionales)
 
+@app.route("/")
+@app.route("/tiposactivo")
+def tiposactivo():
+    tiposactivo = controlador_juegos.obtener_tipo_activo()
+    return render_template("tiposactivo.html", tiposactivo=tiposactivo)
 
-
+#Main de Tablas - Fin
 
 @app.route("/eliminar_juego", methods=["POST"])
 def eliminar_juego():

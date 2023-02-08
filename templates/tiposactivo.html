@@ -1,11 +1,11 @@
 {% extends "maestra.html" %}
-{% block titulo %} UnidadesOrganizacionales {% endblock %}
+{% block titulo %} TiposActivo {% endblock %}
 {% block contenido %}
 
 <section class="section">
     <div class="columns">
         <div class="column">
-            <h3 class="is-size-3">Unidades Organizacionales</h3>
+            <h3 class="is-size-3">Tipos Activo</h3>
             <table class="table">
                 <thead>
                     <tr>
@@ -16,19 +16,19 @@
                     </tr>
                 </thead>
                 <tbody>
-                    {% for unidadorganizacional in unidadesorganizacionales %}
+                    {% for tipoactivo in tiposactivo %}
                     <tr>
-                        <td>{{unidadorganizacional[0]}}</td>
-                        <td>{{unidadorganizacional[1]}}</td>
+                        <td>{{tipoactivo[0]}}</td>
+                        <td>{{tipoactivo[1]}}</td>
 
                     </tr>
                     <!-- <td>
                         {# Pasar el id (lo que hay en juego[0] #}
-                        <a href="{{url_for('editar_juego', id=unidadorganizacional[0])}}" class="button is-info">Editar</a>
+                        <a href="{{url_for('editar_juego', id=tipoactivo[0])}}" class="button is-info">Editar</a>
                     </td>
                     <td>
                         <form action="{{url_for('eliminar_juego')}}" method="POST">
-                            <input type="hidden" name="id" value="{{unidadorganizacional[0]}}">
+                            <input type="hidden" name="id" value="{{tipoactivo[0]}}">
                             <button class="button is-danger">Eliminar</button>
                         </form>
                     </td> -->
