@@ -268,6 +268,24 @@ def api_obtenerriesgos():
 
 #API's CRUD Riesgo - Fin
 
+#API's CRUD Riesgo - Inicio
+
+@app.route("/api_obtenercausas")
+def api_obtenercausas():
+    try:
+        causas = controlador_juegos.obtener_causa()
+        listaserializable = []
+        for causa in causas:
+            miobj = clase_causa.Causa(causa[0], causa[1],causa[2])
+            listaserializable.append(miobj.midic.copy())
+        return jsonify(listaserializable)
+    except:
+        return jsonify({"Mensaje":"Error interno. Llame al Administrador de sistemas (+51) 969 696 969"})
+
+#API's CRUD Riesgo - Fin
+
+
+
 # Iniciar el servidor
 if __name__ == "__main__":
     app.run(host='0.0.0.0', port=8000, debug=True)

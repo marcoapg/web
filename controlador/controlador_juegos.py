@@ -89,7 +89,7 @@ def obtener_causa():
     conexion = obtener_conexion()
     causa=[]
     with conexion.cursor() as cursor:
-        cursor.execute("SELECT CausaID,RiesgoID,Descripcion from Causa")
+        cursor.execute("SELECT cau.CausaID,rie.Descripcion as DescripcionRiesgo,cau.Descripcion as DescripcionCausa from Causa cau INNER JOIN Riesgo rie on rie.RiesgoID =cau.RiesgoID")
         causa = cursor.fetchall()
     conexion.close()
     return causa
