@@ -12,6 +12,8 @@ import clase.clase_causa as clase_causa
 import clase.clase_amenaza as clase_amenaza
 import clase.clase_vulnerabilidad as clase_vulnerabilidad
 import clase.clase_activo as clase_activo
+import clase.clase_riesgo as clase_riesgo
+
 
 app = Flask(__name__)
 
@@ -105,7 +107,7 @@ def inicio():
 
     return render_template("maestra.html",title='ControlRiesgos')
 
-#Main Template - Inicio
+#Templates - Inicio
 
 #(Unidad Organizacional)
 @app.route("/")
@@ -131,7 +133,10 @@ def tiposactivo():
     tiposactivo = controlador_juegos.obtener_tipo_activo()
     return render_template("tiposactivo.html", tiposactivo=tiposactivo)
 
-#Main Template - Fin
+#Templates - Fin
+
+
+
 
 #CRUD Templates - Inicio
 
@@ -247,6 +252,21 @@ def api_obteneractivos():
 
 #API's CRUD Vulnerabilidad - Fin
 
+#API's CRUD Riesgo - Inicio
+
+@app.route("/api_obtenerriesgos")
+def api_obtenerriesgos():
+    try:
+        riesgos = controlador_juegos.obtener_riego()
+        listaserializable = []
+        for riesgo in riesgos:
+            miobj = clase_riesgo.Riesgo(riesgo[0], riesgo[1],riesgo[2],riesgo[3],riesgo[4])
+            listaserializable.append(miobj.midic.copy())
+        return jsonify(listaserializable)
+    except:
+        return jsonify({"Mensaje":"Error interno. Llame al Administrador de sistemas (+51) 969 696 969"})
+
+#API's CRUD Riesgo - Fin
 
 # Iniciar el servidor
 if __name__ == "__main__":
