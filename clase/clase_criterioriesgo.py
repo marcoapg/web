@@ -6,7 +6,7 @@ class Criterio_Riesgo:
     midic = dict()
 
     def __init__(self, p_criterioriesgoid,p_descripcion,p_valor,p_color):
-        self.tipoactivoid = p_criterioriesgoid
+        self.criterioriesgoid = p_criterioriesgoid
         self.descripcion = p_descripcion
         self.valor = p_valor
         self.color = p_color

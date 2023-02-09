@@ -15,6 +15,7 @@ import clase.clase_activo as clase_activo
 import clase.clase_riesgo as clase_riesgo
 import clase.clase_criterioimpacto as clase_criterioimpacto
 import clase.clase_criterioriesgo as clase_criterioriesgo
+import clase.clase_registroimpactoprobabilidad as clase_registroimpactoprobabilidad
 
 app = Flask(__name__)
 
@@ -332,6 +333,22 @@ def api_obtenercriteriosriesgo():
         return jsonify({"Mensaje":"Error interno. Llame al Administrador de sistemas (+51) 969 696 969"})
 
 #API's CRUD Criterio Riesgo - Fin
+
+#API's CRUD Registro Impacto Probabilidad - Inicio
+
+@app.route("/api_obtenerregistrosimpactoprobabilidad")
+def api_obtenerregistrosimpactoprobabilidad():
+    try:
+        registrosimpactoprobabilidad = controlador_juegos.obtener_registro_impacto_probabilidad()
+        listaserializable = []
+        for registroimpactoprobabilidad in registrosimpactoprobabilidad:
+            miobj = clase_registroimpactoprobabilidad.Registro_Impacto_Probabilidad(registroimpactoprobabilidad[0], registroimpactoprobabilidad[1],registroimpactoprobabilidad[2],registroimpactoprobabilidad[3],registroimpactoprobabilidad[4],registroimpactoprobabilidad[5])
+            listaserializable.append(miobj.midic.copy())
+        return jsonify(listaserializable)
+    except:
+        return jsonify({"Mensaje":"Error interno. Llame al Administrador de sistemas (+51) 969 696 969"})
+
+#API's CRUD Registro Impacto Probabilidad - Fin
 
 
 # Iniciar el servidor
