@@ -1,6 +1,10 @@
 import json
 from flask import Flask, render_template, request, redirect, flash, jsonify
+#Controladores
 import controlador.controlador_juegos as controlador_juegos
+import controlador.controlador_unidadorganizacional as controlador_unidadorganizacional
+
+#Clases
 import clase.clase_juego as clase_juego
 import clase.clase_unidadorganizacional as clase_unidadorganizacional
 import clase.clase_tipoactivo as clase_tipoactivo
@@ -103,11 +107,11 @@ def inicio():
 
 #Main Template - Inicio
 
-# Unidad Organizacional
+#(Unidad Organizacional)
 @app.route("/")
 @app.route("/unidadesorganizacionales")
 def unidadesorganizacionales():
-    unidadesorganizacionales = controlador_juegos.obtener_unidad_organizacional()
+    unidadesorganizacionales = controlador_unidadorganizacional.obtener_unidad_organizacional()
     return render_template("unidadesorganizacionales.html", unidadesorganizacionales=unidadesorganizacionales)
 
 @app.route("/agregar_unidadorganizacional")
@@ -117,10 +121,10 @@ def formulario_agregar_unidadorganizacional():
 @app.route("/formulario_editar_unidadorganizacional/<int:id>")
 def editar_unidadorganizacional(id):
     # Obtener el juego por ID
-    unidadorganizacional = controlador_juegos.obtener_unidadorganizacional_por_id(id)
+    unidadorganizacional = controlador_unidadorganizacional.obtener_unidadorganizacional_por_id(id)
     return render_template("editar_unidadorganizacional.html", unidadorganizacional=unidadorganizacional)
 
-#Tipo Activo
+#(Tipo Activo)
 @app.route("/")
 @app.route("/tiposactivo")
 def tiposactivo():
@@ -139,15 +143,15 @@ def guardar_unidadorganizacional():
     return redirect("/unidadesorganizacionales")
 
 @app.route("/actualizar_unidadorganizacional", methods=["POST"])
-def actualizar_juego():
+def actualizar_unidadorganizacional():
     id = request.form["id"]
     descripcion = request.form["descripcion"]
-    controlador_juegos.actualizar_unidadorganizacional(descripcion, id)
+    controlador_unidadorganizacional.actualizar_unidadorganizacional(descripcion, id)
     return redirect("/unidadesorganizacionales")
 
 @app.route("/eliminar_unidadorganizacional", methods=["POST"])
 def eliminar_unidadorganizacional():
-    controlador_juegos.eliminar_unidadorganizacional(request.form["id"])
+    controlador_unidadorganizacional.eliminar_unidadorganizacional(request.form["id"])
     return redirect("/unidadesorganizacionales")
 
 #CRUD Templates - Fin
@@ -160,7 +164,7 @@ def eliminar_unidadorganizacional():
 @app.route("/api_obtenerunidadesorganizacionales")
 def api_obtenerunidadesorganizacionales():
     try:
-        unidadesorganizacionales = controlador_juegos.obtener_unidad_organizacional()
+        unidadesorganizacionales = controlador_unidadorganizacional.obtener_unidad_organizacional()
         listaserializable = []
         for unidadesorganizacional in unidadesorganizacionales:
             miobj = clase_unidadorganizacional.Unidad_Organizacional(unidadesorganizacional[0], unidadesorganizacional[1])
