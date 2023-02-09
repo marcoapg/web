@@ -6,13 +6,15 @@
     <div class="columns">
         <div class="column">
             <h3 class="is-size-3">Unidades Organizacionales</h3>
+            <a href="{{url_for('formulario_agregar_unidadorganizacional')}}" class="button is-success">Agregar</a>
+
             <table class="table">
                 <thead>
                     <tr>
                         <th>Id</th>
                         <th>Descripción</th>
-                        <!-- <th>Editar</th>
-                        <th>Eliminar</th> -->
+                        <th>Editar</th>
+                        <th>Eliminar</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -20,18 +22,17 @@
                     <tr>
                         <td>{{unidadorganizacional[0]}}</td>
                         <td>{{unidadorganizacional[1]}}</td>
-
-                    </tr>
-                    <!-- <td>
-                        {# Pasar el id (lo que hay en juego[0] #}
-                        <a href="{{url_for('editar_juego', id=unidadorganizacional[0])}}" class="button is-info">Editar</a>
-                    </td>
-                    <td>
-                        <form action="{{url_for('eliminar_juego')}}" method="POST">
-                            <input type="hidden" name="id" value="{{unidadorganizacional[0]}}">
-                            <button class="button is-danger">Eliminar</button>
-                        </form>
-                    </td> -->
+                        <td>
+                            {# Pasar el id (lo que hay en juego[0] #}
+                            <a href="{{url_for('editar_unidadorganizacional', id=unidadorganizacional[0])}}" class="button is-info">Editar</a>
+                        </td>
+                        <td>
+                            <form action="{{url_for('eliminar_unidadorganizacional')}}" method="POST">
+                                <input type="hidden" name="id" value="{{unidadorganizacional[0]}}">
+                                <button class="button is-danger">Eliminar</button>
+                            </form>
+                        </td>
+                    </tr>                    
                     {% endfor %}
                 </tbody>
             </table>

@@ -1,0 +1,23 @@
+{% extends "maestra.html" %}
+{% block titulo %}
+Editar unidadorganizacional
+{% endblock %}
+{% block contenido %}
+<section class="section">
+    <div class="columns">
+        <div class="column">
+            <h3 class="is-size-3">Editar Unidad Organizacional</h3>
+            <form action="{{url_for('actualizar_unidadorganizacional')}}" method="post">
+                {# Enviar el id en un campo oculto #}
+                <input type="hidden" name="id" value="{{unidadorganizacional[0]}}">
+
+                <label for="descripcion">Descripción</label>
+                <input value="{{unidadorganizacional[1]}}" required type="text" class="input" placeholder="Descripción" name="descripcion" id="descripcion">
+                
+                <button type="submit" class="button is-success mt-2">Guardar</button>
+                <a href="{{url_for('unidadesorganizacionales')}}" class="button is-primary mt-2">Volver</a>
+            </form>
+        </div>
+    </div>
+</section>
+{% endblock %}

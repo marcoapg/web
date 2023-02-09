@@ -9,6 +9,8 @@ def insertar_juego(nombre, descripcion, precio):
     conexion.commit()
     conexion.close()
 
+
+
 # Tabla Amenaza
 
 def obtener_amenaza():
@@ -41,6 +43,14 @@ def obtener_unidad_organizacional():
         unidad_organizacional = cursor.fetchall()
     conexion.close()
     return unidad_organizacional
+
+def insertar_unidadorganizacional(descripcion):
+    conexion = obtener_conexion()
+    with conexion.cursor() as cursor:
+        cursor.execute("INSERT INTO Unidad_Organizacional(descripcion) VALUES (%s)",
+                       (descripcion))
+    conexion.commit()
+    conexion.close()    
     
 # Tabla tipo_activo
 
@@ -143,11 +153,28 @@ def obtener_juego_por_id(id):
     conexion.close()
     return juego
 
+def obtener_unidadorganizacional_por_id(id):
+    conexion = obtener_conexion()
+    unidadorganizacional = None
+    with conexion.cursor() as cursor:
+        cursor.execute(
+            "SELECT UnidadOrganizacionalID, descripcion FROM Unidad_Organizacional WHERE UnidadOrganizacionalID = %s", (id,))
+        unidadorganizacional = cursor.fetchone()
+    conexion.close()
+    return unidadorganizacional
 
 def actualizar_juego(nombre, descripcion, precio, id):
     conexion = obtener_conexion()
     with conexion.cursor() as cursor:
         cursor.execute("UPDATE juegos SET nombre = %s, descripcion = %s, precio = %s WHERE id = %s",
                        (nombre, descripcion, precio, id))
+    conexion.commit()
+    conexion.close()
+
+def actualizar_unidadorganizacional(descripcion, id):
+    conexion = obtener_conexion()
+    with conexion.cursor() as cursor:
+        cursor.execute("UPDATE Unidad_Organizacional SET descripcion = %s WHERE UnidadOrganizacionalID = %s",
+                       (descripcion, id))
     conexion.commit()
     conexion.close()
