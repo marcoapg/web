@@ -13,7 +13,8 @@ import clase.clase_amenaza as clase_amenaza
 import clase.clase_vulnerabilidad as clase_vulnerabilidad
 import clase.clase_activo as clase_activo
 import clase.clase_riesgo as clase_riesgo
-
+import clase.clase_criterioimpacto as clase_criterioimpacto
+import clase.clase_criterioriesgo as clase_criterioriesgo
 
 app = Flask(__name__)
 
@@ -284,6 +285,53 @@ def api_obtenercausas():
 
 #API's CRUD Riesgo - Fin
 
+#API's CRUD Criterio Impacto - Inicio
+
+@app.route("/api_obtenercriteriosimpacto")
+def api_obtenercriteriosimpacto():
+    try:
+        criteriosimpacto = controlador_juegos.obtener_criterio_impacto()
+        listaserializable = []
+        for criterioimpacto in criteriosimpacto:
+            miobj = clase_criterioimpacto.Criterio_Impacto(criterioimpacto[0], criterioimpacto[1],criterioimpacto[2])
+            listaserializable.append(miobj.midic.copy())
+        return jsonify(listaserializable)
+    except:
+        return jsonify({"Mensaje":"Error interno. Llame al Administrador de sistemas (+51) 969 696 969"})
+
+#API's CRUD Criterio Impacto - Fin
+
+#API's CRUD Criterio Probabilidad - Inicio
+
+@app.route("/api_obtenercriteriosprobabilidad")
+def api_obtenercriteriosprobabilidad():
+    try:
+        criteriosprobabilidad = controlador_juegos.obtener_criterio_probabilidad()
+        listaserializable = []
+        for criterioprobabilidad in criteriosprobabilidad:
+            miobj = clase_criterioimpacto.Criterio_Impacto(criterioprobabilidad[0], criterioprobabilidad[1],criterioprobabilidad[2])
+            listaserializable.append(miobj.midic.copy())
+        return jsonify(listaserializable)
+    except:
+        return jsonify({"Mensaje":"Error interno. Llame al Administrador de sistemas (+51) 969 696 969"})
+
+#API's CRUD Criterio Probabilidad - Fin
+
+#API's CRUD Criterio Riesgo - Inicio
+
+@app.route("/api_obtenercriteriosriesgo")
+def api_obtenercriteriosriesgo():
+    try:
+        criteriosriesgo = controlador_juegos.obtener_criterio_riesgo()
+        listaserializable = []
+        for criterioriesgo in criteriosriesgo:
+            miobj = clase_criterioriesgo.Criterio_Riesgo(criterioriesgo[0], criterioriesgo[1],criterioriesgo[2],criterioriesgo[3])
+            listaserializable.append(miobj.midic.copy())
+        return jsonify(listaserializable)
+    except:
+        return jsonify({"Mensaje":"Error interno. Llame al Administrador de sistemas (+51) 969 696 969"})
+
+#API's CRUD Criterio Riesgo - Fin
 
 
 # Iniciar el servidor
