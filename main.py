@@ -336,6 +336,14 @@ def api_obtenercausas():
     except:
         return jsonify({"Mensaje":"Error interno. Llame al Administrador de sistemas (+51) 969 696 969"})
 
+@app.route("/api_guardarcausa", methods=["POST"])
+def api_guardarcausa():
+    riesgoid = request.json["riesgoid"]
+    descripcion = request.json["descripcion"]
+    controlador_causa.insertar_causa(riesgoid,descripcion)
+    # De cualquier modo, y si todo fue bien, redireccionar
+    return jsonify({"Mensaje":"Causa registrada correctamente"})
+
 #API's CRUD Riesgo - Fin
 
 #API's CRUD Criterio Impacto - Inicio
@@ -343,7 +351,7 @@ def api_obtenercausas():
 @app.route("/api_obtenercriteriosimpacto")
 def api_obtenercriteriosimpacto():
     try:
-        criteriosimpacto = controlador_criterioimpacto.obtener_criterio_impacto()
+        criteriosimpacto = controlador_criterioimpacto.obtener_criterioimpacto()
         listaserializable = []
         for criterioimpacto in criteriosimpacto:
             miobj = clase_criterioimpacto.Criterio_Impacto(criterioimpacto[0], criterioimpacto[1],criterioimpacto[2])
@@ -352,6 +360,14 @@ def api_obtenercriteriosimpacto():
     except:
         return jsonify({"Mensaje":"Error interno. Llame al Administrador de sistemas (+51) 969 696 969"})
 
+@app.route("/api_guardarcriterioimpacto", methods=["POST"])
+def api_guardarcriterioimpacto():
+    descripcion = request.json["descripcion"]
+    valor = request.json["valor"]
+    controlador_criterioimpacto.insertar_criterioimpacto(descripcion,valor)
+    # De cualquier modo, y si todo fue bien, redireccionar
+    return jsonify({"Mensaje":"Criterio Impacto registrado correctamente"})
+
 #API's CRUD Criterio Impacto - Fin
 
 #API's CRUD Criterio Probabilidad - Inicio
@@ -359,7 +375,7 @@ def api_obtenercriteriosimpacto():
 @app.route("/api_obtenercriteriosprobabilidad")
 def api_obtenercriteriosprobabilidad():
     try:
-        criteriosprobabilidad = controlador_criterioprobabilidad.obtener_criterio_probabilidad()
+        criteriosprobabilidad = controlador_criterioprobabilidad.obtener_criterioprobabilidad()
         listaserializable = []
         for criterioprobabilidad in criteriosprobabilidad:
             miobj = clase_criterioprobabilidad.Criterio_Probabilidad(criterioprobabilidad[0], criterioprobabilidad[1],criterioprobabilidad[2])
@@ -367,6 +383,15 @@ def api_obtenercriteriosprobabilidad():
         return jsonify(listaserializable)
     except:
         return jsonify({"Mensaje":"Error interno. Llame al Administrador de sistemas (+51) 969 696 969"})
+        
+@app.route("/api_guardarcriterioprobabilidad", methods=["POST"])
+def api_guardarcriterioprobabilidad():
+    descripcion = request.json["descripcion"]
+    valor = request.json["valor"]
+    controlador_criterioprobabilidad.insertar_criterioprobabilidad(descripcion,valor)
+    # De cualquier modo, y si todo fue bien, redireccionar
+    return jsonify({"Mensaje":"Criterio Probabilidad registrado correctamente"})
+
 
 #API's CRUD Criterio Probabilidad - Fin
 
@@ -375,7 +400,7 @@ def api_obtenercriteriosprobabilidad():
 @app.route("/api_obtenercriteriosriesgo")
 def api_obtenercriteriosriesgo():
     try:
-        criteriosriesgo = controlador_criterioriesgo.obtener_criterio_riesgo()
+        criteriosriesgo = controlador_criterioriesgo.obtener_criterioriesgo()
         listaserializable = []
         for criterioriesgo in criteriosriesgo:
             miobj = clase_criterioriesgo.Criterio_Riesgo(criterioriesgo[0], criterioriesgo[1],criterioriesgo[2],criterioriesgo[3])
@@ -384,6 +409,16 @@ def api_obtenercriteriosriesgo():
     except:
         return jsonify({"Mensaje":"Error interno. Llame al Administrador de sistemas (+51) 969 696 969"})
 
+@app.route("/api_guardarcriterioriesgo", methods=["POST"])
+def api_guardarcriterioriesgo():
+    descripcion = request.json["descripcion"]
+    valor = request.json["valor"]
+    color = request.json["color"]
+
+    controlador_criterioriesgo.insertar_criterioriesgo(descripcion,valor,color)
+    # De cualquier modo, y si todo fue bien, redireccionar
+    return jsonify({"Mensaje":"Criterio Riesgo registrado correctamente"})
+
 #API's CRUD Criterio Riesgo - Fin
 
 #API's CRUD Registro Impacto Probabilidad - Inicio
@@ -391,7 +426,7 @@ def api_obtenercriteriosriesgo():
 @app.route("/api_obtenerregistrosimpactoprobabilidad")
 def api_obtenerregistrosimpactoprobabilidad():
     try:
-        registrosimpactoprobabilidad = controlador_registroimpactoprobabilidad.obtener_registro_impacto_probabilidad()
+        registrosimpactoprobabilidad = controlador_registroimpactoprobabilidad.obtener_registroimpactoprobabilidad()
         listaserializable = []
         for registroimpactoprobabilidad in registrosimpactoprobabilidad:
             miobj = clase_registroimpactoprobabilidad.Registro_Impacto_Probabilidad(registroimpactoprobabilidad[0], registroimpactoprobabilidad[1],registroimpactoprobabilidad[2],registroimpactoprobabilidad[3],registroimpactoprobabilidad[4],registroimpactoprobabilidad[5])
@@ -400,6 +435,16 @@ def api_obtenerregistrosimpactoprobabilidad():
     except:
         return jsonify({"Mensaje":"Error interno. Llame al Administrador de sistemas (+51) 969 696 969"})
 
+@app.route("/api_guardarregistroimpactoprobabilidad", methods=["POST"])
+def api_guardarregistroimpactoprobabilidad():
+    riesgoid = request.json["riesgoid"]
+    criterioimpactoid = request.json["criterioimpactoid"]
+    criterioprobabilidadid = request.json["criterioprobabilidadid"]
+    criterioriesgoid = request.json["criterioriesgoid"]
+    uid = request.json["uid"]
+    controlador_registroimpactoprobabilidad.insertar_registroimpactoprobabilidad(riesgoid,criterioimpactoid,criterioprobabilidadid,criterioriesgoid,uid)
+    # De cualquier modo, y si todo fue bien, redireccionar
+    return jsonify({"Mensaje":"Registro Impacto Probabilidad registrado correctamente"})
 #API's CRUD Registro Impacto Probabilidad - Fin
 
 
