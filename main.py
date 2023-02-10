@@ -5,7 +5,7 @@ import controlador.controlador_juegos as controlador_juegos
 import controlador.controlador_unidadorganizacional as controlador_unidadorganizacional
 import controlador.controlador_activo as controlador_activo
 import controlador.controlador_tipoactivo as controlador_tipoactivo
-import controlador.controlador_amenazas as controlador_amenazas
+import controlador.controlador_amenaza as controlador_amenaza
 import controlador.controlador_vulnerabilidad as controlador_vulnerabilidad
 import controlador.controlador_criterioimpacto as controlador_criterioimpacto
 import controlador.controlador_criterioprobabilidad as controlador_criterioprobabilidad
@@ -197,7 +197,7 @@ def api_guardarunidadorganizacional():
     descripcion = request.json["descripcion"]
     controlador_unidadorganizacional.insertar_unidadorganizacional(descripcion)
     # De cualquier modo, y si todo fue bien, redireccionar
-    return jsonify({"Mensaje":"Unidad Organizacional registrado correctamente"})
+    return jsonify({"Mensaje":"Unidad Organizacional registrada correctamente"})
 
 #API's CRUD Unidad Organizacional - Fin
 
@@ -216,6 +216,13 @@ def api_obtenertiposactivo():
     except:
         return jsonify({"Mensaje":"Error interno. Llame al Administrador de sistemas (+51) 969 696 969"})
 
+@app.route("/api_guardartipoactivo", methods=["POST"])
+def api_guardartipoactivo():
+    descripcion = request.json["descripcion"]
+    controlador_tipoactivo.insertar_tipoactivo(descripcion)
+    # De cualquier modo, y si todo fue bien, redireccionar
+    return jsonify({"Mensaje":"Tipo Activo registrado correctamente"})
+
 #API's CRUD Tipo Activo - Fin
 
 #API's CRUD Amenaza - Inicio
@@ -223,7 +230,7 @@ def api_obtenertiposactivo():
 @app.route("/api_obteneramenazas")
 def api_obteneramenazas():
     try:
-        amenazas = controlador_amenazas.obtener_amenaza()
+        amenazas = controlador_amenaza.obtener_amenaza()
         listaserializable = []
         for amenaza in amenazas:
             miobj = clase_amenaza.Amenaza(amenaza[0], amenaza[1])
@@ -231,6 +238,13 @@ def api_obteneramenazas():
         return jsonify(listaserializable)
     except:
         return jsonify({"Mensaje":"Error interno. Llame al Administrador de sistemas (+51) 969 696 969"})
+
+@app.route("/api_guardaramenaza", methods=["POST"])
+def api_guardaramenaza():
+    descripcion = request.json["descripcion"]
+    controlador_amenaza.insertar_amenaza(descripcion)
+    # De cualquier modo, y si todo fue bien, redireccionar
+    return jsonify({"Mensaje":"Amenaza registrada correctamente"})
 
 #API's CRUD Amenaza - Fin
 
@@ -248,6 +262,13 @@ def api_obtenervulnerabilidades():
     except:
         return jsonify({"Mensaje":"Error interno. Llame al Administrador de sistemas (+51) 969 696 969"})
 
+@app.route("/api_guardarvulnerabilidad", methods=["POST"])
+def api_guardarvulnerabilidad():
+    descripcion = request.json["descripcion"]
+    controlador_vulnerabilidad.insertar_vulnerabilidad(descripcion)
+    # De cualquier modo, y si todo fue bien, redireccionar
+    return jsonify({"Mensaje":"Vulnerabilidad registrada correctamente"})
+
 #API's CRUD Vulnerabilidad - Fin
 
 #API's CRUD Vulnerabilidad - Inicio
@@ -264,6 +285,15 @@ def api_obteneractivos():
     except:
         return jsonify({"Mensaje":"Error interno. Llame al Administrador de sistemas (+51) 969 696 969"})
 
+@app.route("/api_guardaractivo", methods=["POST"])
+def api_guardaractivo():
+    descripcion = request.json["descripcion"]
+    tipoactivoid = request.json["tipoactivoid"]
+    unidadorganizacionalid = request["unidadesorganizacionalid"]
+    controlador_activo.insertar_activo(descripcion,tipoactivoid,unidadorganizacionalid)
+    # De cualquier modo, y si todo fue bien, redireccionar
+    return jsonify({"Mensaje":"Activo registrado correctamente"})
+
 #API's CRUD Vulnerabilidad - Fin
 
 #API's CRUD Riesgo - Inicio
@@ -279,6 +309,16 @@ def api_obtenerriesgos():
         return jsonify(listaserializable)
     except:
         return jsonify({"Mensaje":"Error interno. Llame al Administrador de sistemas (+51) 969 696 969"})
+
+@app.route("/api_guardarriesgo", methods=["POST"])
+def api_guardarriesgo():
+    descripcion = request.json["descripcion"]
+    activoid = request.json["activoid"]
+    vulnerabilidadid = request["vulnerabilidadid"]    
+    amenazaid = request["amenazaid"]
+    controlador_riesgo.insertar_riesgo(descripcion,activoid,vulnerabilidadid,amenazaid)
+    # De cualquier modo, y si todo fue bien, redireccionar
+    return jsonify({"Mensaje":"Riesgo registrado correctamente"})
 
 #API's CRUD Riesgo - Fin
 
