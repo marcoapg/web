@@ -6,13 +6,15 @@
     <div class="columns">
         <div class="column">
             <h3 class="is-size-3">Tipos Activo</h3>
+            <a href="{{url_for('formulario_agregar_tipoactivo')}}" class="button is-success">Agregar</a>
+
             <table class="table">
                 <thead>
                     <tr>
                         <th>Id</th>
                         <th>Descripción</th>
-                        <!-- <th>Editar</th>
-                        <th>Eliminar</th> -->
+                        <th>Editar</th>
+                        <th>Eliminar</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -20,18 +22,18 @@
                     <tr>
                         <td>{{tipoactivo[0]}}</td>
                         <td>{{tipoactivo[1]}}</td>
-
+                        <td>
+                            {# Pasar el id (lo que hay en juego[0] #}
+                            <a href="{{url_for('editar_tipoactivo', id=tipoactivo[0])}}" class="button is-info">Editar</a>
+                        </td>
+                        <td>
+                            <form action="{{url_for('eliminar_tipoactivo')}}" method="POST">
+                                <input type="hidden" name="id" value="{{tipoactivo[0]}}">
+                                <button class="button is-danger">Eliminar</button>
+                            </form>
+                        </td>
                     </tr>
-                    <!-- <td>
-                        {# Pasar el id (lo que hay en juego[0] #}
-                        <a href="{{url_for('editar_juego', id=tipoactivo[0])}}" class="button is-info">Editar</a>
-                    </td>
-                    <td>
-                        <form action="{{url_for('eliminar_juego')}}" method="POST">
-                            <input type="hidden" name="id" value="{{tipoactivo[0]}}">
-                            <button class="button is-danger">Eliminar</button>
-                        </form>
-                    </td> -->
+
                     {% endfor %}
                 </tbody>
             </table>

@@ -15,7 +15,7 @@ def obtener_activo_por_id(id):
     activo = None
     with conexion.cursor() as cursor:
         cursor.execute(
-            "SELECT act.ActivoID,act.Descripcion,tip.Descripcion AS DescripcionTipoActivo,org.Descripcion AS DescripcionUnidadOrganizacional FROM activo act INNER JOIN tipo_activo tip on (act.TipoActivoID = tip.TipoActivoID) INNER JOIN unidad_organizacional org on (act.UnidadOrganizacionalID = org.UnidadOrganizacionalID) WHERE act.ActivoID = %s", (id,))
+            "SELECT act.ActivoID,act.Descripcion,act.TipoActivoID,act.UnidadOrganizacionalID FROM activo act INNER JOIN tipo_activo tip on (act.TipoActivoID = tip.TipoActivoID) INNER JOIN unidad_organizacional org on (act.UnidadOrganizacionalID = org.UnidadOrganizacionalID) WHERE act.ActivoID = %s", (id,))
         activo = cursor.fetchone()
     conexion.close()
     return activo
@@ -29,4 +29,21 @@ def insertar_activo(descripcion,tipoactivoid,unidadorganizacionalid):
         cursor.execute("INSERT INTO activo(Descripcion,TipoActivoID,UnidadOrganizacionalID) VALUES (%s,%s,%s)",
                        (descripcion,tipoactivoid,unidadorganizacionalid))
     conexion.commit()
-    conexion.close()    
+    conexion.close() 
+
+#(UPDATE)
+def actualizar_activo(descripcion,tipoactivoid,unidadorganizacionalid, id):
+    conexion = obtener_conexion()
+    with conexion.cursor() as cursor:
+        cursor.execute("UPDATE activo SET Descripcion = %s, TipoActivoID= %s, UnidadOrganizacionalID= %s WHERE ActivoID = %s",
+                       (descripcion,tipoactivoid,unidadorganizacionalid, id))
+    conexion.commit()
+    conexion.close()
+
+#(DELETE)
+def eliminar_activo(id):
+    conexion = obtener_conexion()
+    with conexion.cursor() as cursor:
+        cursor.execute("DELETE FROM activo WHERE ActivoID = %s", (id,))
+    conexion.commit()
+    conexion.close()   

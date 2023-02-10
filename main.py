@@ -144,8 +144,36 @@ def editar_unidadorganizacional(id):
 @app.route("/")
 @app.route("/tiposactivo")
 def tiposactivo():
-    tiposactivo = controlador_activo.obtener_tipoactivo()
+    tiposactivo = controlador_tipoactivo.obtener_tipoactivo()
     return render_template("tiposactivo.html", tiposactivo=tiposactivo)
+
+@app.route("/agregar_tipoactivo")
+def formulario_agregar_tipoactivo():
+    return render_template("agregar_tipoactivo.html")
+
+@app.route("/formulario_editar_tipoactivo/<int:id>")
+def editar_tipoactivo(id):
+    # Obtener el juego por ID
+    tipoactivo = controlador_tipoactivo.obtener_tipoactivo_por_id(id)
+    return render_template("editar_tipoactivo.html", tipoactivo=tipoactivo)
+
+#(Activo)
+@app.route("/")
+@app.route("/activos")
+def activos():
+    activos = controlador_activo.obtener_activo()
+    return render_template("activos.html", activos=activos)
+
+@app.route("/agregar_activo")
+def formulario_agregar_activo():
+    return render_template("agregar_activo.html")
+
+@app.route("/formulario_editar_activo/<int:id>")
+def editar_activo(id):
+    # Obtener el juego por ID
+    activo = controlador_activo.obtener_activo_por_id(id)
+    return render_template("editar_activo.html", activo=activo)
+
 
 #Templates - Fin
 
@@ -154,6 +182,7 @@ def tiposactivo():
 
 #CRUD Templates - Inicio
 
+#(Unidad Organizacional)
 @app.route("/guardar_unidadorganizacional", methods=["POST"])
 def guardar_unidadorganizacional():
     descripcion = request.form["descripcion"]
@@ -172,6 +201,51 @@ def actualizar_unidadorganizacional():
 def eliminar_unidadorganizacional():
     controlador_unidadorganizacional.eliminar_unidadorganizacional(request.form["id"])
     return redirect("/unidadesorganizacionales")
+
+#(Tipo Activo)
+@app.route("/guardar_tipoactivo", methods=["POST"])
+def guardar_tipoactivo():
+    descripcion = request.form["descripcion"]
+    controlador_tipoactivo.insertar_tipoactivo(descripcion)
+    # De cualquier modo, y si todo fue bien, redireccionar
+    return redirect("/tiposactivo")
+
+@app.route("/actualizar_tipoactivo", methods=["POST"])
+def actualizar_tipoactivo():
+    id = request.form["id"]
+    descripcion = request.form["descripcion"]
+    controlador_tipoactivo.actualizar_tipoactivo(descripcion, id)
+    return redirect("/tiposactivo")
+
+@app.route("/eliminar_tipoactivo", methods=["POST"])
+def eliminar_tipoactivo():
+    controlador_tipoactivo.eliminar_tipoactivo(request.form["id"])
+    return redirect("/tiposactivo")
+
+#(Activo)
+@app.route("/guardar_activo", methods=["POST"])
+def guardar_activo():
+    descripcion = request.form["descripcion"]
+    tipoactivoid = request.form["tipoactivoid"]
+    unidadorganizacionalid = request.form["unidadorganizacionalid"]
+    controlador_activo.insertar_activo(descripcion,tipoactivoid,unidadorganizacionalid)
+    # De cualquier modo, y si todo fue bien, redireccionar
+    return redirect("/activos")
+
+@app.route("/actualizar_activo", methods=["POST"])
+def actualizar_activo():
+    id = request.form["id"]
+    descripcion = request.form["descripcion"]
+    tipoactivoid = request.form["tipoactivoid"]
+    unidadorganizacionalid = request.form["unidadorganizacionalid"]
+
+    controlador_activo.actualizar_activo(descripcion,tipoactivoid,unidadorganizacionalid,id)
+    return redirect("/activos")
+
+@app.route("/eliminar_activo", methods=["POST"])
+def eliminar_activo():
+    controlador_activo.eliminar_activo(request.form["id"])
+    return redirect("/activos")
 
 #CRUD Templates - Fin
 
@@ -289,7 +363,7 @@ def api_obteneractivos():
 def api_guardaractivo():
     descripcion = request.json["descripcion"]
     tipoactivoid = request.json["tipoactivoid"]
-    unidadorganizacionalid = request["unidadesorganizacionalid"]
+    unidadorganizacionalid = request.json["unidadesorganizacionalid"]
     controlador_activo.insertar_activo(descripcion,tipoactivoid,unidadorganizacionalid)
     # De cualquier modo, y si todo fue bien, redireccionar
     return jsonify({"Mensaje":"Activo registrado correctamente"})
@@ -314,8 +388,8 @@ def api_obtenerriesgos():
 def api_guardarriesgo():
     descripcion = request.json["descripcion"]
     activoid = request.json["activoid"]
-    vulnerabilidadid = request["vulnerabilidadid"]    
-    amenazaid = request["amenazaid"]
+    vulnerabilidadid = request.json["vulnerabilidadid"]    
+    amenazaid = request.json["amenazaid"]
     controlador_riesgo.insertar_riesgo(descripcion,activoid,vulnerabilidadid,amenazaid)
     # De cualquier modo, y si todo fue bien, redireccionar
     return jsonify({"Mensaje":"Riesgo registrado correctamente"})

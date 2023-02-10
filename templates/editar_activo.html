@@ -1,0 +1,30 @@
+{% extends "maestra.html" %}
+{% block titulo %}
+Editar activo
+{% endblock %}
+{% block contenido %}
+<section class="section">
+    <div class="columns">
+        <div class="column">
+            <h3 class="is-size-3">Editar activo</h3>
+            <form action="{{url_for('actualizar_activo')}}" method="post">
+                {# Enviar el id en un campo oculto #}
+
+                <input type="hidden" name="id" value="{{activo[0]}}">
+
+                <label for="descripcion">Descripción</label>
+                <input value="{{activo[1]}}" required type="text" class="input" placeholder="Descripción" name="descripcion" id="descripcion">
+                
+                <label for="tipoactivoid">TipoActivoID</label>
+                <input value="{{activo[2]}}" required type="number" class="input" placeholder="TipoActivoID" name="tipoactivoid" id="tipoactivoid">
+
+                <label for="unidadorganizacionalid">UnidadOrganizacionalID</label>
+                <input value="{{activo[3]}}" required type="number" class="input" placeholder="UnidadOrganizacionalID" name="unidadorganizacionalid" id="unidadorganizacionalid">
+
+                <button type="submit" class="button is-success mt-2">Guardar</button>
+                <a href="{{url_for('activos')}}" class="button is-primary mt-2">Volver</a>
+            </form>
+        </div>
+    </div>
+</section>
+{% endblock %}

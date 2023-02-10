@@ -30,3 +30,20 @@ def insertar_tipoactivo(descripcion):
                        (descripcion))
     conexion.commit()
     conexion.close()    
+
+#(UPDATE)
+def actualizar_tipoactivo(descripcion, id):
+    conexion = obtener_conexion()
+    with conexion.cursor() as cursor:
+        cursor.execute("UPDATE tipo_activo SET descripcion = %s WHERE TipoActivoID = %s",
+                       (descripcion, id))
+    conexion.commit()
+    conexion.close()
+
+#(DELETE)
+def eliminar_tipoactivo(id):
+    conexion = obtener_conexion()
+    with conexion.cursor() as cursor:
+        cursor.execute("DELETE FROM tipo_activo WHERE TipoActivoID = %s", (id,))
+    conexion.commit()
+    conexion.close()
