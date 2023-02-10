@@ -2,3 +2,16 @@
 __pycache__/bd.cpython-39.pyc
 clase/__pycache__/clase_juego.cpython-39.pyc
 controlador/__pycache__/controlador_juegos.cpython-39.pyc
+clase/__pycache__/clase_criterioprobabilidad.cpython-39.pyc
+controlador/__pycache__/controlador_activo.cpython-39.pyc
+controlador/__pycache__/controlador_amenazas.cpython-39.pyc
+controlador/__pycache__/controlador_causa.cpython-39.pyc
+controlador/__pycache__/controlador_criterioimpacto.cpython-39.pyc
+controlador/__pycache__/controlador_criterioprobabilidad.cpython-39.pyc
+controlador/__pycache__/controlador_criterioriesgo.cpython-39.pyc
+controlador/__pycache__/controlador_registroimpactoprobabilidad.cpython-39.pyc
+controlador/__pycache__/controlador_riesgo.cpython-39.pyc
+controlador/__pycache__/controlador_tipoactivo.cpython-39.pyc
+controlador/__pycache__/controlador_unidadorganizacional.cpython-39.pyc
+controlador/__pycache__/controlador_vulnerabilidad.cpython-39.pyc
+controlador/__pycache__/controlador_unidadorganizacional.cpython-39.pyc

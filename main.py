@@ -3,6 +3,17 @@ from flask import Flask, render_template, request, redirect, flash, jsonify
 #Controladores
 import controlador.controlador_juegos as controlador_juegos
 import controlador.controlador_unidadorganizacional as controlador_unidadorganizacional
+import controlador.controlador_activo as controlador_activo
+import controlador.controlador_tipoactivo as controlador_tipoactivo
+import controlador.controlador_amenazas as controlador_amenazas
+import controlador.controlador_vulnerabilidad as controlador_vulnerabilidad
+import controlador.controlador_criterioimpacto as controlador_criterioimpacto
+import controlador.controlador_criterioprobabilidad as controlador_criterioprobabilidad
+import controlador.controlador_criterioriesgo as controlador_criterioriesgo
+import controlador.controlador_causa as controlador_causa
+import controlador.controlador_riesgo as controlador_riesgo
+import controlador.controlador_registroimpactoprobabilidad as controlador_registroimpactoprobabilidad
+
 
 #Clases
 import clase.clase_juego as clase_juego
@@ -15,6 +26,7 @@ import clase.clase_activo as clase_activo
 import clase.clase_riesgo as clase_riesgo
 import clase.clase_criterioimpacto as clase_criterioimpacto
 import clase.clase_criterioriesgo as clase_criterioriesgo
+import clase.clase_criterioprobabilidad as  clase_criterioprobabilidad
 import clase.clase_registroimpactoprobabilidad as clase_registroimpactoprobabilidad
 
 app = Flask(__name__)
@@ -132,7 +144,7 @@ def editar_unidadorganizacional(id):
 @app.route("/")
 @app.route("/tiposactivo")
 def tiposactivo():
-    tiposactivo = controlador_juegos.obtener_tipo_activo()
+    tiposactivo = controlador_activo.obtener_tipo_activo()
     return render_template("tiposactivo.html", tiposactivo=tiposactivo)
 
 #Templates - Fin
@@ -145,7 +157,7 @@ def tiposactivo():
 @app.route("/guardar_unidadorganizacional", methods=["POST"])
 def guardar_unidadorganizacional():
     descripcion = request.form["descripcion"]
-    controlador_juegos.insertar_unidadorganizacional(descripcion)
+    controlador_unidadorganizacional.insertar_unidadorganizacional(descripcion)
     # De cualquier modo, y si todo fue bien, redireccionar
     return redirect("/unidadesorganizacionales")
 
@@ -183,7 +195,7 @@ def api_obtenerunidadesorganizacionales():
 @app.route("/api_guardar_unidadorganizacional", methods=["POST"])
 def api_guardar_unidadorganizacional():
     descripcion = request.json["descripcion"]
-    controlador_juegos.insertar_unidadorganizacional(descripcion)
+    controlador_unidadorganizacional.insertar_unidadorganizacional(descripcion)
     # De cualquier modo, y si todo fue bien, redireccionar
     return jsonify({"Mensaje":"Unidad Organizacional registrado correctamente"})
 
@@ -195,7 +207,7 @@ def api_guardar_unidadorganizacional():
 @app.route("/api_obtenertiposactivo")
 def api_obtenertiposactivo():
     try:
-        tiposactivo = controlador_juegos.obtener_tipo_activo()
+        tiposactivo = controlador_tipoactivo.obtener_tipo_activo()
         listaserializable = []
         for tipoactivo in tiposactivo:
             miobj = clase_tipoactivo.Tipo_Activo(tipoactivo[0], tipoactivo[1])
@@ -211,7 +223,7 @@ def api_obtenertiposactivo():
 @app.route("/api_obteneramenazas")
 def api_obteneramenazas():
     try:
-        amenazas = controlador_juegos.obtener_amenaza()
+        amenazas = controlador_amenazas.obtener_amenaza()
         listaserializable = []
         for amenaza in amenazas:
             miobj = clase_amenaza.Amenaza(amenaza[0], amenaza[1])
@@ -227,7 +239,7 @@ def api_obteneramenazas():
 @app.route("/api_obtenervulnerabilidades")
 def api_obtenervulnerabilidades():
     try:
-        vulnerabilidades = controlador_juegos.obtener_vulnerabilidad()
+        vulnerabilidades = controlador_vulnerabilidad.obtener_vulnerabilidad()
         listaserializable = []
         for vulnerabilidad in vulnerabilidades:
             miobj = clase_vulnerabilidad.Vulnerabilidad(vulnerabilidad[0], vulnerabilidad[1])
@@ -243,7 +255,7 @@ def api_obtenervulnerabilidades():
 @app.route("/api_obteneractivos")
 def api_obteneractivos():
     try:
-        activos = controlador_juegos.obtener_activo()
+        activos = controlador_activo.obtener_activo()
         listaserializable = []
         for activo in activos:
             miobj = clase_activo.Activo(activo[0], activo[1],activo[2],activo[3])
@@ -259,7 +271,7 @@ def api_obteneractivos():
 @app.route("/api_obtenerriesgos")
 def api_obtenerriesgos():
     try:
-        riesgos = controlador_juegos.obtener_riego()
+        riesgos = controlador_riesgo.obtener_riego()
         listaserializable = []
         for riesgo in riesgos:
             miobj = clase_riesgo.Riesgo(riesgo[0], riesgo[1],riesgo[2],riesgo[3],riesgo[4])
@@ -275,7 +287,7 @@ def api_obtenerriesgos():
 @app.route("/api_obtenercausas")
 def api_obtenercausas():
     try:
-        causas = controlador_juegos.obtener_causa()
+        causas = controlador_causa.obtener_causa()
         listaserializable = []
         for causa in causas:
             miobj = clase_causa.Causa(causa[0], causa[1],causa[2])
@@ -291,7 +303,7 @@ def api_obtenercausas():
 @app.route("/api_obtenercriteriosimpacto")
 def api_obtenercriteriosimpacto():
     try:
-        criteriosimpacto = controlador_juegos.obtener_criterio_impacto()
+        criteriosimpacto = controlador_criterioimpacto.obtener_criterio_impacto()
         listaserializable = []
         for criterioimpacto in criteriosimpacto:
             miobj = clase_criterioimpacto.Criterio_Impacto(criterioimpacto[0], criterioimpacto[1],criterioimpacto[2])
@@ -307,10 +319,10 @@ def api_obtenercriteriosimpacto():
 @app.route("/api_obtenercriteriosprobabilidad")
 def api_obtenercriteriosprobabilidad():
     try:
-        criteriosprobabilidad = controlador_juegos.obtener_criterio_probabilidad()
+        criteriosprobabilidad = controlador_criterioprobabilidad.obtener_criterio_probabilidad()
         listaserializable = []
         for criterioprobabilidad in criteriosprobabilidad:
-            miobj = clase_criterioimpacto.Criterio_Impacto(criterioprobabilidad[0], criterioprobabilidad[1],criterioprobabilidad[2])
+            miobj = clase_criterioprobabilidad.Criterio_Probabilidad(criterioprobabilidad[0], criterioprobabilidad[1],criterioprobabilidad[2])
             listaserializable.append(miobj.midic.copy())
         return jsonify(listaserializable)
     except:
@@ -323,7 +335,7 @@ def api_obtenercriteriosprobabilidad():
 @app.route("/api_obtenercriteriosriesgo")
 def api_obtenercriteriosriesgo():
     try:
-        criteriosriesgo = controlador_juegos.obtener_criterio_riesgo()
+        criteriosriesgo = controlador_criterioriesgo.obtener_criterio_riesgo()
         listaserializable = []
         for criterioriesgo in criteriosriesgo:
             miobj = clase_criterioriesgo.Criterio_Riesgo(criterioriesgo[0], criterioriesgo[1],criterioriesgo[2],criterioriesgo[3])
@@ -339,7 +351,7 @@ def api_obtenercriteriosriesgo():
 @app.route("/api_obtenerregistrosimpactoprobabilidad")
 def api_obtenerregistrosimpactoprobabilidad():
     try:
-        registrosimpactoprobabilidad = controlador_juegos.obtener_registro_impacto_probabilidad()
+        registrosimpactoprobabilidad = controlador_registroimpactoprobabilidad.obtener_registro_impacto_probabilidad()
         listaserializable = []
         for registroimpactoprobabilidad in registrosimpactoprobabilidad:
             miobj = clase_registroimpactoprobabilidad.Registro_Impacto_Probabilidad(registroimpactoprobabilidad[0], registroimpactoprobabilidad[1],registroimpactoprobabilidad[2],registroimpactoprobabilidad[3],registroimpactoprobabilidad[4],registroimpactoprobabilidad[5])
