@@ -144,7 +144,7 @@ def editar_unidadorganizacional(id):
 @app.route("/")
 @app.route("/tiposactivo")
 def tiposactivo():
-    tiposactivo = controlador_activo.obtener_tipo_activo()
+    tiposactivo = controlador_activo.obtener_tipoactivo()
     return render_template("tiposactivo.html", tiposactivo=tiposactivo)
 
 #Templates - Fin
@@ -192,8 +192,8 @@ def api_obtenerunidadesorganizacionales():
     except:
         return jsonify({"Mensaje":"Error interno. Llame al Administrador de sistemas (+51) 969 696 969"})
 
-@app.route("/api_guardar_unidadorganizacional", methods=["POST"])
-def api_guardar_unidadorganizacional():
+@app.route("/api_guardarunidadorganizacional", methods=["POST"])
+def api_guardarunidadorganizacional():
     descripcion = request.json["descripcion"]
     controlador_unidadorganizacional.insertar_unidadorganizacional(descripcion)
     # De cualquier modo, y si todo fue bien, redireccionar
