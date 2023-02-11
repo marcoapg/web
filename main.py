@@ -242,6 +242,23 @@ def editar_riesgo(id):
     riesgo = controlador_riesgo.obtener_riesgo_por_id(id)
     return render_template("editar_riesgo.html", riesgo=riesgo)
 
+#(Registro Impacto)
+@app.route("/")
+@app.route("/registrosimpactoprobabilidad")
+def registrosimpactoprobabilidad():
+    registrosimpactoprobabilidad = controlador_registroimpactoprobabilidad.obtener_registroimpactoprobabilidad()
+    return render_template("registrosimpactoprobabilidad.html", registrosimpactoprobabilidad=registrosimpactoprobabilidad)
+
+@app.route("/agregar_registroimpactoprobabilidad")
+def formulario_agregar_registroimpactoprobabilidad():
+    return render_template("agregar_registroimpactoprobabilidad.html")
+
+@app.route("/formulario_editar_registroimpactoprobabilidad/<int:id>")
+def editar_registroimpactoprobabilidad(id):
+    # Obtener el juego por ID
+    registroimpactoprobabilidad = controlador_registroimpactoprobabilidad.obtener_registroimpactoprobabilidad(id)
+    return render_template("editar_registroimpactoprobabilidad.html", registroimpactoprobabilidad=registroimpactoprobabilidad)
+
 #Templates - Fin
 
 
@@ -404,6 +421,35 @@ def actualizar_riesgo():
 def eliminar_riesgo():
     controlador_riesgo.eliminar_riesgo(request.form["id"])
     return redirect("/riesgos")
+
+#(Registro Impacto Probabilidad)
+@app.route("/guardar_registroimpactoprobabilidad", methods=["POST"])
+def guardar_registroimpactoprobabilidad():
+    riesgoid = request.form["riesgoid"]
+    criterioimpactoid = request.form["criterioimpactoid"]
+    criterioprobabilidadid = request.form["criterioprobabilidadid"]
+    criterioriesgoid = request.form["criterioriesgoid"]
+    uid = request.form["uid"]
+    controlador_registroimpactoprobabilidad.insertar_registroimpactoprobabilidad(riesgoid,criterioimpactoid,criterioprobabilidadid,criterioriesgoid,uid)
+    # De cualquier modo, y si todo fue bien, redireccionar
+    return redirect("/registrosimpactoprobabilidad")
+
+@app.route("/actualizar_registroimpactoprobabilidad", methods=["POST"])
+def actualizar_registroimpactoprobabilidad():
+    id = request.form["id"]
+    riesgoid = request.form["riesgoid"]
+    criterioimpactoid = request.form["criterioimpactoid"]
+    criterioprobabilidadid = request.form["criterioprobabilidadid"]
+    criterioriesgoid = request.form["criterioriesgoid"]
+    uid = request.form["uid"]
+
+    controlador_riesgo.actualizar_riesgo(riesgoid,criterioimpactoid,criterioprobabilidadid,criterioriesgoid,uid,id)
+    return redirect("/registrosimpactoprobabilidad")
+
+@app.route("/eliminar_registroimpactoprobabilidad", methods=["POST"])
+def eliminar_registroimpactoprobabilidad():
+    controlador_registroimpactoprobabilidad.eliminar_registroimpactoprobabilidad(request.form["id"])
+    return redirect("/registrosimpactoprobabilidad")
 
 #CRUD Templates - Fin
 

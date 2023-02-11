@@ -1,0 +1,37 @@
+{% extends "maestra.html" %}
+{% block titulo %}
+Editar juego
+{% endblock %}
+{% block contenido %}
+<section class="section">
+    <div class="columns">
+        <div class="column">
+            <h3 class="is-size-3">Editar Registro Impacto Probabilidad</h3>
+            <form action="{{url_for('actualizar_registroimpactoprobabilidad')}}" method="post">
+                {# Enviar el id en un campo oculto #}
+                <input type="hidden" name="id" value="{{registroimpactoprobabilidad[0]}}">
+
+                <label for="riesgoid">RiesgoID</label>
+                <input value="{{registroimpactoprobabilidad[1]}}" required type="number" class="input" placeholder="RiesgoID" name="riesgoid" id="riesgoid">
+
+                <label for="riesgoid">CriterioImpactoID</label>
+                <input value="{{registroimpactoprobabilidad[2]}}" required type="number" class="input" placeholder="CriterioImpactoID" name="criterioimpactoid" id="criterioimpactoid">
+
+                <label for="riesgoid">CriterioProbabilidadID</label>
+                <input value="{{registroimpactoprobabilidad[3]}}" required type="number" class="input" placeholder="CriterioProbabilidadID" name="criterioprobabilidadid" id="criterioprobabilidadid">
+
+                <label for="riesgoid">CriterioRiesgoID</label>
+                <input value="{{registroimpactoprobabilidad[4]}}" required type="number" class="input" placeholder="CriterioRiesgoID" name="criteriroriesgoid" id="criterioriesgoid">
+
+
+                <label for="uid">UID:</label>
+                <input value="{{registroimpactoprobabilidad[5]}}" required type="text" class="input" placeholder="UID" name="uid" id="uid">
+                
+
+                <button type="submit" class="button is-success mt-2">Guardar</button>
+                <a href="{{url_for('registrosimpactoprobabilidad')}}" class="button is-primary mt-2">Volver</a>
+            </form>
+        </div>
+    </div>
+</section>
+{% endblock %}

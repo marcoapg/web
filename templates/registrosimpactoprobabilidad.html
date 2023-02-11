@@ -1,0 +1,60 @@
+{% extends "maestra.html" %}
+{% block titulo %} registrosimpactoprobabilidad {% endblock %}
+{% block contenido %}
+
+<section class="section">
+    <div class="columns">
+        <div class="column">
+            <h3 class="is-size-3">Registros Impacto Probabilidad</h3>
+            <a href="{{url_for('formulario_agregar_registroimpactoprobabilidad')}}" class="button is-success">Agregar</a>
+            <table class="table">
+                <thead>
+                    <tr>
+                        <th>Id</th>
+                        <th>Riesgo</th>
+                        <th>CriterioImpacto</th>
+                        <th>CriterioProbabilidad</th>
+                        <th>CriterioRiesgo</th>
+                        <th>UID</th>
+                        <th>Editar</th>
+                        <th>Eliminar</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for registroimpactoprobabilidad in registrosimpactoprobabilidad %}
+                    <tr>
+                        <td>{{registroimpactoprobabilidad[0]}}</td>
+                        <td>{{registroimpactoprobabilidad[1]}}</td>
+                        <td>{{registroimpactoprobabilidad[2]}}</td>
+                        <td>{{registroimpactoprobabilidad[3]}}</td>
+                        <td>{{registroimpactoprobabilidad[4]}}</td>
+                        <td>{{registroimpactoprobabilidad[5]}}</td>
+                        <td>
+                            
+                            <a href="{{url_for('editar_registroimpactoprobabilidad', id=registroimpactoprobabilidad[0])}}" class="button is-info">Editar</a>
+                        </td>
+                        <td>
+                            <form action="{{url_for('eliminar_registroimpactoprobabilidad')}}" method="POST">
+                                <input type="hidden" name="id" value="{{registroimpactoprobabilidad[0]}}">
+                                <button class="button is-danger">Eliminar</button>
+                            </form>
+                        </td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+
+        <div class="column">
+            <h5 class="mb-4">FK's</h5>
+            <a class="button is-primary is-light mb-4" href="{{url_for('inicio')}}">Criterio Impacto</a><br>
+            <a class="button is-primary is-light mb-4" href="{{url_for('inicio')}}">Crterio Probabilidad</a><br>
+            <a class="button is-primary is-light mb-4" href="{{url_for('inicio')}}">Criterio Riesgo</a>
+
+            <!-- <h5 class="mb-4">Referencia</h5>
+            <a class="button is-primary is-light mb-4" href="{{url_for('registrosimpactoprobabilidad')}}">Registro Impacto Probabilidad</a> -->
+
+        </div>
+    </div>
+</section>
+{% endblock %}
