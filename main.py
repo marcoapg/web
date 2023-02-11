@@ -140,6 +140,40 @@ def editar_unidadorganizacional(id):
     unidadorganizacional = controlador_unidadorganizacional.obtener_unidadorganizacional_por_id(id)
     return render_template("editar_unidadorganizacional.html", unidadorganizacional=unidadorganizacional)
 
+#(Vulnerabilidad)
+@app.route("/")
+@app.route("/vulnerabilidades")
+def vulnerabilidades():
+    vulnerabilidades = controlador_vulnerabilidad.obtener_vulnerabilidad()
+    return render_template("vulnerabilidades.html", vulnerabilidades=vulnerabilidades)
+
+@app.route("/agregar_vulnerabilidad")
+def formulario_agregar_vulnerabilidad():
+    return render_template("agregar_vulnerabilidad.html")
+
+@app.route("/formulario_editar_vulnerabilidad/<int:id>")
+def editar_vulnerabilidad(id):
+    # Obtener el juego por ID
+    vulnerabilidad = controlador_vulnerabilidad.obtener_vulnerabilidad_por_id(id)
+    return render_template("editar_vulnerabilidad.html", vulnerabilidad=vulnerabilidad)
+
+#(Amenaza)
+@app.route("/")
+@app.route("/amenazas")
+def amenazas():
+    amenazas = controlador_amenaza.obtener_amenaza()
+    return render_template("amenazas.html", amenazas=amenazas)
+
+@app.route("/agregar_amenaza")
+def formulario_agregar_amenaza():
+    return render_template("agregar_amenaza.html")
+
+@app.route("/formulario_editar_amenaza/<int:id>")
+def editar_amenaza(id):
+    # Obtener el juego por ID
+    amenaza = controlador_amenaza.obtener_amenaza_por_id(id)
+    return render_template("editar_amenaza.html", amenaza=amenaza)
+
 #(Tipo Activo)
 @app.route("/")
 @app.route("/tiposactivo")
@@ -174,6 +208,39 @@ def editar_activo(id):
     activo = controlador_activo.obtener_activo_por_id(id)
     return render_template("editar_activo.html", activo=activo)
 
+#(Causa)
+@app.route("/")
+@app.route("/causas")
+def causas():
+    causas = controlador_causa.obtener_causa()
+    return render_template("causas.html", causas=causas)
+
+@app.route("/agregar_causa")
+def formulario_agregar_causa():
+    return render_template("agregar_causa.html")
+
+@app.route("/formulario_editar_causa/<int:id>")
+def editar_causa(id):
+    # Obtener el juego por ID
+    causa = controlador_causa.obtener_causa_por_id(id)
+    return render_template("editar_causa.html", causa=causa)
+
+#(Riesgo)
+@app.route("/")
+@app.route("/riesgos")
+def riesgos():
+    riesgos = controlador_riesgo.obtener_riego()
+    return render_template("riesgos.html", riesgos=riesgos)
+
+@app.route("/agregar_riesgo")
+def formulario_agregar_riesgo():
+    return render_template("agregar_riesgo.html")
+
+@app.route("/formulario_editar_riesgo/<int:id>")
+def editar_riesgo(id):
+    # Obtener el juego por ID
+    riesgo = controlador_riesgo.obtener_riesgo_por_id(id)
+    return render_template("editar_riesgo.html", riesgo=riesgo)
 
 #Templates - Fin
 
@@ -201,6 +268,46 @@ def actualizar_unidadorganizacional():
 def eliminar_unidadorganizacional():
     controlador_unidadorganizacional.eliminar_unidadorganizacional(request.form["id"])
     return redirect("/unidadesorganizacionales")
+
+#(Vulnerabilidad)
+@app.route("/guardar_vulnerabilidad", methods=["POST"])
+def guardar_vulnerabilidad():
+    descripcion = request.form["descripcion"]
+    controlador_vulnerabilidad.insertar_vulnerabilidad(descripcion)
+    # De cualquier modo, y si todo fue bien, redireccionar
+    return redirect("/vulnerabilidades")
+
+@app.route("/actualizar_vulnerabilidad", methods=["POST"])
+def actualizar_vulnerabilidad():
+    id = request.form["id"]
+    descripcion = request.form["descripcion"]
+    controlador_vulnerabilidad.actualizar_vulnerabilidad(descripcion, id)
+    return redirect("/vulnerabilidades")
+
+@app.route("/eliminar_vulnerabilidad", methods=["POST"])
+def eliminar_vulnerabilidad():
+    controlador_vulnerabilidad.eliminar_vulnerabilidad(request.form["id"])
+    return redirect("/vulnerabilidades")
+
+#(Amenaza)
+@app.route("/guardar_amenaza", methods=["POST"])
+def guardar_amenaza():
+    descripcion = request.form["descripcion"]
+    controlador_amenaza.insertar_amenaza(descripcion)
+    # De cualquier modo, y si todo fue bien, redireccionar
+    return redirect("/amenazas")
+
+@app.route("/actualizar_amenaza", methods=["POST"])
+def actualizar_amenaza():
+    id = request.form["id"]
+    descripcion = request.form["descripcion"]
+    controlador_amenaza.actualizar_amenaza(descripcion, id)
+    return redirect("/amenazas")
+
+@app.route("/eliminar_amenaza", methods=["POST"])
+def eliminar_amenaza():
+    controlador_amenaza.eliminar_amenaza(request.form["id"])
+    return redirect("/amenazas")
 
 #(Tipo Activo)
 @app.route("/guardar_tipoactivo", methods=["POST"])
@@ -246,6 +353,57 @@ def actualizar_activo():
 def eliminar_activo():
     controlador_activo.eliminar_activo(request.form["id"])
     return redirect("/activos")
+
+#(Causa)
+@app.route("/guardar_causa", methods=["POST"])
+def guardar_causa():
+    riesgoid = request.form["riesgoid"]  
+    descripcion = request.form["descripcion"]
+
+    controlador_causa.insertar_causa(riesgoid,descripcion)
+    # De cualquier modo, y si todo fue bien, redireccionar
+    return redirect("/causas")
+
+@app.route("/actualizar_causa", methods=["POST"])
+def actualizar_causa():
+    id = request.form["id"]
+    riesgoid = request.form["riesgoid"]  
+    descripcion = request.form["descripcion"]
+
+    controlador_causa.actualizar_causa(riesgoid,descripcion,id)
+    return redirect("/causas")
+
+@app.route("/eliminar_causa", methods=["POST"])
+def eliminar_causa():
+    controlador_causa.eliminar_causa(request.form["id"])
+    return redirect("/causas")
+
+#(Riesgo)
+@app.route("/guardar_riesgo", methods=["POST"])
+def guardar_riesgo():
+    descripcion = request.form["descripcion"]
+    activoid = request.form["activoid"]
+    vulnerabilidadid = request.form["vulnerabilidadid"]
+    amenazaid = request.form["amenazaid"]
+    controlador_riesgo.insertar_riesgo(descripcion,activoid,vulnerabilidadid,amenazaid)
+    # De cualquier modo, y si todo fue bien, redireccionar
+    return redirect("/riesgos")
+
+@app.route("/actualizar_riesgo", methods=["POST"])
+def actualizar_riesgo():
+    id = request.form["id"]
+    descripcion = request.form["descripcion"]
+    activoid = request.form["activoid"]
+    vulnerabilidadid = request.form["vulnerabilidadid"]
+    amenazaid = request.form["amenazaid"]
+
+    controlador_riesgo.actualizar_riesgo(descripcion,activoid,vulnerabilidadid,amenazaid,id)
+    return redirect("/riesgos")
+
+@app.route("/eliminar_riesgo", methods=["POST"])
+def eliminar_riesgo():
+    controlador_riesgo.eliminar_riesgo(request.form["id"])
+    return redirect("/riesgos")
 
 #CRUD Templates - Fin
 

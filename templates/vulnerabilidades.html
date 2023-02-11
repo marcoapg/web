@@ -1,12 +1,12 @@
 {% extends "maestra.html" %}
-{% block titulo %} TiposActivo {% endblock %}
+{% block titulo %} Vulnerabilidades {% endblock %}
 {% block contenido %}
 
 <section class="section">
     <div class="columns">
         <div class="column">
-            <h3 class="is-size-3">Tipos Activo</h3>
-            <a href="{{url_for('formulario_agregar_tipoactivo')}}" class="button is-success">Agregar</a>
+            <h3 class="is-size-3">Vulnerabilidades</h3>
+            <a href="{{url_for('formulario_agregar_vulnerabilidad')}}" class="button is-success">Agregar</a>
 
             <table class="table">
                 <thead>
@@ -18,29 +18,28 @@
                     </tr>
                 </thead>
                 <tbody>
-                    {% for tipoactivo in tiposactivo %}
+                    {% for vulnerabilidad in vulnerabilidades %}
                     <tr>
-                        <td>{{tipoactivo[0]}}</td>
-                        <td>{{tipoactivo[1]}}</td>
+                        <td>{{vulnerabilidad[0]}}</td>
+                        <td>{{vulnerabilidad[1]}}</td>
                         <td>
                             {# Pasar el id (lo que hay en juego[0] #}
-                            <a href="{{url_for('editar_tipoactivo', id=tipoactivo[0])}}" class="button is-info">Editar</a>
+                            <a href="{{url_for('editar_vulnerabilidad', id=vulnerabilidad[0])}}" class="button is-info">Editar</a>
                         </td>
                         <td>
-                            <form action="{{url_for('eliminar_tipoactivo')}}" method="POST">
-                                <input type="hidden" name="id" value="{{tipoactivo[0]}}">
+                            <form action="{{url_for('eliminar_vulnerabilidad')}}" method="POST">
+                                <input type="hidden" name="id" value="{{vulnerabilidad[0]}}">
                                 <button class="button is-danger">Eliminar</button>
                             </form>
                         </td>
-                    </tr>
-
+                    </tr>                    
                     {% endfor %}
                 </tbody>
             </table>
         </div>
         <div class="column">
             <h5 class="mb-4">Referencia</h5>
-            <a class="button is-primary is-light mb-4" href="{{url_for('activos')}}">Activo</a>
+            <a class="button is-primary is-light mb-4" href="{{url_for('riesgos')}}">Riesgo</a>
         </div>
     </div>
 </section>

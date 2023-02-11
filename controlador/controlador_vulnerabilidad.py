@@ -30,3 +30,20 @@ def insertar_vulnerabilidad(descripcion):
                        (descripcion))
     conexion.commit()
     conexion.close()    
+
+#(UPDATE)
+def actualizar_vulnerabilidad(descripcion, id):
+    conexion = obtener_conexion()
+    with conexion.cursor() as cursor:
+        cursor.execute("UPDATE vulnerabilidad SET descripcion = %s WHERE VulnerabilidadID = %s",
+                       (descripcion, id))
+    conexion.commit()
+    conexion.close()
+
+#(DELETE)
+def eliminar_vulnerabilidad(id):
+    conexion = obtener_conexion()
+    with conexion.cursor() as cursor:
+        cursor.execute("DELETE FROM vulnerabilidad WHERE VulnerabilidadID = %s", (id,))
+    conexion.commit()
+    conexion.close()

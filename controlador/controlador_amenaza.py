@@ -30,4 +30,21 @@ def insertar_amenaza(descripcion):
         cursor.execute("INSERT INTO amenaza(descripcion) VALUES (%s)",
                        (descripcion))
     conexion.commit()
-    conexion.close()    
+    conexion.close() 
+
+#(UPDATE)
+def actualizar_amenaza(descripcion, id):
+    conexion = obtener_conexion()
+    with conexion.cursor() as cursor:
+        cursor.execute("UPDATE amenaza SET descripcion = %s WHERE AmenazaID = %s",
+                       (descripcion, id))
+    conexion.commit()
+    conexion.close()
+
+#(DELETE)
+def eliminar_amenaza(id):
+    conexion = obtener_conexion()
+    with conexion.cursor() as cursor:
+        cursor.execute("DELETE FROM amenaza WHERE AmenazaID = %s", (id,))
+    conexion.commit()
+    conexion.close()   

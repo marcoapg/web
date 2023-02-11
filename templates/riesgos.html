@@ -1,0 +1,58 @@
+{% extends "maestra.html" %}
+{% block titulo %} Riesgos {% endblock %}
+{% block contenido %}
+
+<section class="section">
+    <div class="columns">
+        <div class="column">
+            <h3 class="is-size-3">Riesgos</h3>
+            <a href="{{url_for('formulario_agregar_riesgo')}}" class="button is-success">Agregar</a>
+
+            <table class="table">
+                <thead>
+                    <tr>
+                        <th>Id</th>
+                        <th>Descripción</th>
+                        <th>Activo</th>
+                        <th>Vulnerabilidad</th>
+                        <th>Amenaza</th>
+                        <th>Editar</th>
+                        <th>Eliminar</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for riesgo in riesgos %}
+                    <tr>
+                        <td>{{riesgo[0]}}</td>
+                        <td>{{riesgo[1]}}</td>
+                        <td>{{riesgo[2]}}</td>
+                        <td>{{riesgo[3]}}</td>
+                        <td>{{riesgo[4]}}</td>
+                        <td>
+                            {# Pasar el id (lo que hay en juego[0] #}
+                            <a href="{{url_for('editar_riesgo', id=riesgo[0])}}" class="button is-info">Editar</a>
+                        </td>
+                        <td>
+                            <form action="{{url_for('eliminar_riesgo')}}" method="POST">
+                                <input type="hidden" name="id" value="{{riesgo[0]}}">
+                                <button class="button is-danger">Eliminar</button>
+                            </form>
+                        </td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+        <div class="column">
+            <h5 class="mb-4">FK's</h5>
+            <a class="button is-primary is-light mb-4" href="{{url_for('activos')}}">Activo</a><br>
+            <a class="button is-primary is-light mb-4" href="{{url_for('vulnerabilidades')}}">Vulnerabilidad</a><br>
+            <a class="button is-primary is-light mb-4" href="{{url_for('amenazas')}}">Amenaza</a>
+
+            <h5 class="mb-4">Referencia</h5>
+            <a class="button is-primary is-light mb-4" href="{{url_for('causas')}}">Causa</a>
+
+        </div>
+    </div>
+</section>
+{% endblock %}

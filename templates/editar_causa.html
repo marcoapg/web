@@ -1,0 +1,27 @@
+{% extends "maestra.html" %}
+{% block titulo %}
+Editar causa
+{% endblock %}
+{% block contenido %}
+<section class="section">
+    <div class="columns">
+        <div class="column">
+            <h3 class="is-size-3">Editar causa</h3>
+            <form action="{{url_for('actualizar_causa')}}" method="post">
+                {# Enviar el id en un campo oculto #}
+
+                <input type="hidden" name="id" value="{{causa[0]}}">
+                <label for="riesgoid">RiesgoID</label>
+                <input value="{{causa[1]}}" required type="number" class="input" placeholder="RiesgoID" name="riesgoid" id="riesgoid">
+
+                <label for="descripcion">Descripción</label>
+                <input value="{{causa[2]}}" required type="text" class="input" placeholder="Descripción" name="descripcion" id="descripcion">
+                
+
+                <button type="submit" class="button is-success mt-2">Guardar</button>
+                <a href="{{url_for('causas')}}" class="button is-primary mt-2">Volver</a>
+            </form>
+        </div>
+    </div>
+</section>
+{% endblock %}
