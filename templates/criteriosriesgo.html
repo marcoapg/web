@@ -1,0 +1,51 @@
+{% extends "maestra.html" %}
+{% block titulo %} Criterio Riesgo {% endblock %}
+{% block contenido %}
+
+<section class="section">
+    <div class="columns">
+        <div class="column">
+            <h3 class="is-size-3">Criterios Riesgo</h3>
+            <a href="{{url_for('formulario_agregar_criterioriesgo')}}" class="button is-success">Agregar</a>
+
+            <table class="table">
+                <thead>
+                    <tr>
+                        <th>Id</th>
+                        <th>Descripción</th>
+                        <th>Valor</th>
+                        <th>Color</th>
+
+                        <th>Editar</th>
+                        <th>Eliminar</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for criterioriesgo in criteriosriesgo %}
+                    <tr>
+                        <td>{{criterioriesgo[0]}}</td>
+                        <td>{{criterioriesgo[1]}}</td>
+                        <td>{{criterioriesgo[2]}}</td>
+                        <td>{{criterioriesgo[3]}}</td>
+                        <td>
+                            {# Pasar el id (lo que hay en juego[0] #}
+                            <a href="{{url_for('editar_criterioriesgo', id=criterioriesgo[0])}}" class="button is-info">Editar</a>
+                        </td>
+                        <td>
+                            <form action="{{url_for('eliminar_criterioriesgo')}}" method="POST">
+                                <input type="hidden" name="id" value="{{criterioriesgo[0]}}">
+                                <button class="button is-danger">Eliminar</button>
+                            </form>
+                        </td>
+                    </tr>                    
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+        <div class="column">
+            <h5 class="mb-4">Referencia</h5>
+            <a class="button is-primary is-light mb-4" href="{{url_for('registrosimpactoprobabilidad')}}">Registro Impacto Probabilidad</a>
+        </div>
+    </div>
+</section>
+{% endblock %}

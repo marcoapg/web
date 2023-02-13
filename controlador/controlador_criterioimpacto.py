@@ -30,3 +30,20 @@ def insertar_criterioimpacto(descripcion,valor):
                        (descripcion,valor))
     conexion.commit()
     conexion.close()    
+
+#(UPDATE)
+def actualizar_criterioimpacto(descripcion,valor,id):
+    conexion = obtener_conexion()
+    with conexion.cursor() as cursor:
+        cursor.execute("UPDATE criterio_impacto SET descripcion = %s, valor=%s WHERE Criterio_ImpactoID = %s",
+                       (descripcion,valor, id))
+    conexion.commit()
+    conexion.close()
+
+#(DELETE)
+def eliminar_criterioimpacto(id):
+    conexion = obtener_conexion()
+    with conexion.cursor() as cursor:
+        cursor.execute("DELETE FROM criterio_impacto WHERE Criterio_ImpactoID = %s", (id,))
+    conexion.commit()
+    conexion.close()       

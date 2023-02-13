@@ -1,0 +1,26 @@
+{% extends "maestra.html" %}
+{% block titulo %}
+Editar criterio probabilidad
+{% endblock %}
+{% block contenido %}
+<section class="section">
+    <div class="columns">
+        <div class="column">
+            <h3 class="is-size-3">Editar criterio probabilidad</h3>
+            <form action="{{url_for('actualizar_criterioprobabilidad')}}" method="post">
+                {# Enviar el id en un campo oculto #}
+                <input type="hidden" name="id" value="{{criterioprobabilidad[0]}}">
+
+                <label for="descripcion">Descripción</label>
+                <input value="{{criterioprobabilidad[1]}}" required type="text" class="input" placeholder="Descripción" name="descripcion" id="descripcion">
+                
+                <label for="valor">Valor</label>
+                <input value="{{criterioprobabilidad[2]}}" required type="number" class="input" placeholder="Valor" name="valor" id="valor">
+
+                <button type="submit" class="button is-success mt-2">Guardar</button>
+                <a href="{{url_for('criteriosprobabilidad')}}" class="button is-primary mt-2">Volver</a>
+            </form>
+        </div>
+    </div>
+</section>
+{% endblock %}

@@ -157,6 +157,57 @@ def editar_vulnerabilidad(id):
     vulnerabilidad = controlador_vulnerabilidad.obtener_vulnerabilidad_por_id(id)
     return render_template("editar_vulnerabilidad.html", vulnerabilidad=vulnerabilidad)
 
+#(Criterio Impacto)
+@app.route("/")
+@app.route("/criteriosimpacto")
+def criteriosimpacto():
+    criteriosimpacto = controlador_criterioimpacto.obtener_criterioimpacto()
+    return render_template("criteriosimpacto.html", criteriosimpacto=criteriosimpacto)
+
+@app.route("/agregar_criterioimpacto")
+def formulario_agregar_criterioimpacto():
+    return render_template("agregar_criterioimpacto.html")
+
+@app.route("/formulario_editar_criterioimpacto/<int:id>")
+def editar_criterioimpacto(id):
+    # Obtener el juego por ID
+    criterioimpacto = controlador_criterioimpacto.obtener_criterioimpacto_por_id(id)
+    return render_template("editar_criterioimpacto.html", criterioimpacto=criterioimpacto)
+
+#(Criterio Probabilidad)
+@app.route("/")
+@app.route("/criteriosprobabilidad")
+def criteriosprobabilidad():
+    criteriosprobabilidad = controlador_criterioprobabilidad.obtener_criterioprobabilidad()
+    return render_template("criteriosprobabilidad.html", criteriosprobabilidad=criteriosprobabilidad)
+
+@app.route("/agregar_criterioprobabilidad")
+def formulario_agregar_criterioprobabilidad():
+    return render_template("agregar_criterioprobabilidad.html")
+
+@app.route("/formulario_editar_criterioprobabilidad/<int:id>")
+def editar_criterioprobabilidad(id):
+    # Obtener el juego por ID
+    criterioprobabilidad = controlador_criterioprobabilidad.obtener_criterioprobabilidad_por_id(id)
+    return render_template("editar_criterioprobabilidad.html", criterioprobabilidad=criterioprobabilidad)
+
+#(Criterio Riesgo)
+@app.route("/")
+@app.route("/criteriosriesgo")
+def criteriosriesgo():
+    criteriosriesgo = controlador_criterioriesgo.obtener_criterioriesgo()
+    return render_template("criteriosriesgo.html", criteriosriesgo=criteriosriesgo)
+
+@app.route("/agregar_criterioriesgo")
+def formulario_agregar_criterioriesgo():
+    return render_template("agregar_criterioriesgo.html")
+
+@app.route("/formulario_editar_criterioriesgo/<int:id>")
+def editar_criterioriesgo(id):
+    # Obtener el juego por ID
+    criterioriesgo = controlador_criterioriesgo.obtener_criterioriesgo_por_id(id)
+    return render_template("editar_criterioriesgo.html", criterioriesgo=criterioriesgo)
+
 #(Amenaza)
 @app.route("/")
 @app.route("/amenazas")
@@ -285,6 +336,80 @@ def actualizar_unidadorganizacional():
 def eliminar_unidadorganizacional():
     controlador_unidadorganizacional.eliminar_unidadorganizacional(request.form["id"])
     return redirect("/unidadesorganizacionales")
+
+#(Criterio Impacto)
+@app.route("/guardar_criterioimpacto", methods=["POST"])
+def guardar_criterioimpacto():
+    descripcion = request.form["descripcion"]
+    valor = request.form["valor"]
+
+    controlador_criterioimpacto.insertar_criterioimpacto(descripcion,valor)
+    # De cualquier modo, y si todo fue bien, redireccionar
+    return redirect("/criteriosimpacto")
+
+@app.route("/actualizar_criterioimpacto", methods=["POST"])
+def actualizar_criterioimpacto():
+    id = request.form["id"]
+    descripcion = request.form["descripcion"]
+    valor = request.form["valor"]
+
+    controlador_criterioimpacto.actualizar_criterioimpacto(descripcion,valor, id)
+    return redirect("/criteriosimpacto")
+
+@app.route("/eliminar_criterioimpacto", methods=["POST"])
+def eliminar_criterioimpacto():
+    controlador_criterioimpacto.eliminar_criterioimpacto(request.form["id"])
+    return redirect("/criteriosimpacto")
+
+#(Criterio Probabilidad)
+@app.route("/guardar_criterioprobabilidad", methods=["POST"])
+def guardar_criterioprobabilidad():
+    descripcion = request.form["descripcion"]
+    valor = request.form["valor"]
+
+    controlador_criterioprobabilidad.insertar_criterioprobabilidad(descripcion,valor)
+    # De cualquier modo, y si todo fue bien, redireccionar
+    return redirect("/criteriosprobabilidad")
+
+@app.route("/actualizar_criterioprobabilidad", methods=["POST"])
+def actualizar_criterioprobabilidad():
+    id = request.form["id"]
+    descripcion = request.form["descripcion"]
+    valor = request.form["valor"]
+
+    controlador_criterioprobabilidad.actualizar_criterioprobabilidad(descripcion,valor, id)
+    return redirect("/criteriosprobabilidad")
+
+@app.route("/eliminar_criterioprobabilidad", methods=["POST"])
+def eliminar_criterioprobabilidad():
+    controlador_criterioprobabilidad.eliminar_criterioprobabilidad(request.form["id"])
+    return redirect("/criteriosprobabilidad")    
+
+#(Criterio Riesgo)
+@app.route("/guardar_criterioriesgo", methods=["POST"])
+def guardar_criterioriesgo():
+    descripcion = request.form["descripcion"]
+    valor = request.form["valor"]
+    color = request.form["color"]
+
+    controlador_criterioriesgo.insertar_criterioriesgo(descripcion,valor,color)
+    # De cualquier modo, y si todo fue bien, redireccionar
+    return redirect("/criteriosriesgo")
+
+@app.route("/actualizar_criterioriesgo", methods=["POST"])
+def actualizar_criterioriesgo():
+    id = request.form["id"]
+    descripcion = request.form["descripcion"]
+    valor = request.form["valor"]
+    color = request.form["color"]
+
+    controlador_criterioriesgo.actualizar_criterioriesgo(descripcion,valor,color, id)
+    return redirect("/criteriosriesgo")
+
+@app.route("/eliminar_criterioriesgo", methods=["POST"])
+def eliminar_criterioriesgo():
+    controlador_criterioriesgo.eliminar_criterioriesgo(request.form["id"])
+    return redirect("/criteriosriesgo")        
 
 #(Vulnerabilidad)
 @app.route("/guardar_vulnerabilidad", methods=["POST"])
@@ -477,8 +602,19 @@ def api_guardarunidadorganizacional():
     # De cualquier modo, y si todo fue bien, redireccionar
     return jsonify({"Mensaje":"Unidad Organizacional registrada correctamente"})
 
-#API's CRUD Unidad Organizacional - Fin
+@app.route("/api_actualizarunidadorganizacional", methods=["POST"])
+def api_actualizarunidadorganizacional():
+    id = request.json["id"]
+    descripcion = request.json["descripcion"]
+    controlador_unidadorganizacional.actualizar_unidadorganizacional(descripcion, id)
+    return jsonify({"Mensaje":"Unidad Organizacional actualizada correctamente"})
 
+@app.route("/api_eliminarunidadorganizacional", methods=["POST"])
+def api_eliminarunidadorganizacional():
+    controlador_unidadorganizacional.eliminar_unidadorganizacional(request.json["id"])
+    return jsonify({"Mensaje":"Unidad Organizacional eliminada correctamente"})
+
+#API's CRUD Unidad Organizacional - Fin
 
 #API's CRUD Tipo Activo - Inicio
 
@@ -500,6 +636,18 @@ def api_guardartipoactivo():
     controlador_tipoactivo.insertar_tipoactivo(descripcion)
     # De cualquier modo, y si todo fue bien, redireccionar
     return jsonify({"Mensaje":"Tipo Activo registrado correctamente"})
+
+@app.route("/api_actualizartipoactivo", methods=["POST"])
+def api_actualizartipoactivo():
+    id = request.json["id"]
+    descripcion = request.json["descripcion"]
+    controlador_tipoactivo.actualizar_tipoactivo(descripcion, id)
+    return jsonify({"Mensaje":"Tipo Activo actualizado correctamente"})
+
+@app.route("/api_eliminartipoactivo", methods=["POST"])
+def api_eliminartipoactivo():
+    controlador_tipoactivo.eliminar_tipoactivo(request.json["id"])
+    return jsonify({"Mensaje":"Tipo Activo eliminado correctamente"})
 
 #API's CRUD Tipo Activo - Fin
 
@@ -524,6 +672,18 @@ def api_guardaramenaza():
     # De cualquier modo, y si todo fue bien, redireccionar
     return jsonify({"Mensaje":"Amenaza registrada correctamente"})
 
+@app.route("/api_actualizaramenaza", methods=["POST"])
+def api_actualizaramenaza():
+    id = request.jsosn["id"]
+    descripcion = request.json["descripcion"]
+    controlador_amenaza.actualizar_amenaza(descripcion, id)
+    return jsonify({"Mensaje":"Amenaza actualizada correctamente"})
+
+@app.route("/api_eliminaramenaza", methods=["POST"])
+def api_eliminaramenaza():
+    controlador_amenaza.eliminar_amenaza(request.json["id"])
+    return jsonify({"Mensaje":"Amenaza eliminada correctamente"})
+
 #API's CRUD Amenaza - Fin
 
 #API's CRUD Vulnerabilidad - Inicio
@@ -547,9 +707,21 @@ def api_guardarvulnerabilidad():
     # De cualquier modo, y si todo fue bien, redireccionar
     return jsonify({"Mensaje":"Vulnerabilidad registrada correctamente"})
 
+@app.route("/api_actualizarvulnerabilidad", methods=["POST"])
+def api_actualizarvulnerabilidad():
+    id = request.json["id"]
+    descripcion = request.json["descripcion"]
+    controlador_vulnerabilidad.actualizar_vulnerabilidad(descripcion, id)
+    return jsonify({"Mensaje":"Vulnerabilidad actualizada correctamente"})
+
+@app.route("/api_eliminarvulnerabilidad", methods=["POST"])
+def api_eliminarvulnerabilidad():
+    controlador_vulnerabilidad.eliminar_vulnerabilidad(request.json["id"])
+    return jsonify({"Mensaje":"Vulnerabilidad eliminada correctamente"})
+
 #API's CRUD Vulnerabilidad - Fin
 
-#API's CRUD Vulnerabilidad - Inicio
+#API's CRUD Activo - Inicio
 
 @app.route("/api_obteneractivos")
 def api_obteneractivos():
@@ -572,7 +744,23 @@ def api_guardaractivo():
     # De cualquier modo, y si todo fue bien, redireccionar
     return jsonify({"Mensaje":"Activo registrado correctamente"})
 
-#API's CRUD Vulnerabilidad - Fin
+
+@app.route("/api_actualizaractivo", methods=["POST"])
+def api_actualizaractivo():
+    id = request.json["id"]
+    descripcion = request.json["descripcion"]
+    tipoactivoid = request.json["tipoactivoid"]
+    unidadorganizacionalid = request.json["unidadorganizacionalid"]
+
+    controlador_activo.actualizar_activo(descripcion,tipoactivoid,unidadorganizacionalid,id)
+    return jsonify({"Mensaje":"Activo actualizado correctamente"})
+
+@app.route("/api_eliminaractivo", methods=["POST"])
+def api_eliminaractivo():
+    controlador_activo.eliminar_activo(request.json["id"])
+    return jsonify({"Mensaje":"Activo eliminado correctamente"})
+
+#API's CRUD Activo - Fin
 
 #API's CRUD Riesgo - Inicio
 
@@ -598,9 +786,25 @@ def api_guardarriesgo():
     # De cualquier modo, y si todo fue bien, redireccionar
     return jsonify({"Mensaje":"Riesgo registrado correctamente"})
 
+@app.route("/api_actualizarriesgo", methods=["POST"])
+def api_actualizarriesgo():
+    id = request.json["id"]
+    descripcion = request.json["descripcion"]
+    activoid = request.json["activoid"]
+    vulnerabilidadid = request.json["vulnerabilidadid"]
+    amenazaid = request.json["amenazaid"]
+
+    controlador_riesgo.actualizar_riesgo(descripcion,activoid,vulnerabilidadid,amenazaid,id)
+    return jsonify({"Mensaje":"Riesgo actualizado correctamente"})
+
+@app.route("/api_eliminarriesgo", methods=["POST"])
+def api_eliminarriesgo():
+    controlador_riesgo.eliminar_riesgo(request.json["id"])
+    return jsonify({"Mensaje":"Riesgo eliminado correctamente"})
+
 #API's CRUD Riesgo - Fin
 
-#API's CRUD Riesgo - Inicio
+#API's CRUD Causa - Inicio
 
 @app.route("/api_obtenercausas")
 def api_obtenercausas():
@@ -622,7 +826,22 @@ def api_guardarcausa():
     # De cualquier modo, y si todo fue bien, redireccionar
     return jsonify({"Mensaje":"Causa registrada correctamente"})
 
-#API's CRUD Riesgo - Fin
+
+@app.route("/api_actualizarcausa", methods=["POST"])
+def api_actualizarcausa():
+    id = request.json["id"]
+    riesgoid = request.json["riesgoid"]  
+    descripcion = request.json["descripcion"]
+
+    controlador_causa.actualizar_causa(riesgoid,descripcion,id)
+    return jsonify({"Mensaje":"Causa actualizada correctamente"})
+
+@app.route("/api_eliminarcausa", methods=["POST"])
+def api_eliminarcausa():
+    controlador_causa.eliminar_causa(request.json["id"])
+    return jsonify({"Mensaje":"Causa eliminada correctamente"})
+
+#API's CRUD Causa - Fin
 
 #API's CRUD Criterio Impacto - Inicio
 
@@ -645,6 +864,21 @@ def api_guardarcriterioimpacto():
     controlador_criterioimpacto.insertar_criterioimpacto(descripcion,valor)
     # De cualquier modo, y si todo fue bien, redireccionar
     return jsonify({"Mensaje":"Criterio Impacto registrado correctamente"})
+
+
+@app.route("/api_actualizarcriterioimpacto", methods=["POST"])
+def api_actualizarcriterioimpacto():
+    id = request.json["id"]
+    descripcion = request.json["descripcion"]
+    valor = request.json["valor"]
+
+    controlador_criterioimpacto.actualizar_criterioimpacto(descripcion,valor, id)
+    return jsonify({"Mensaje":"Criterio Impacto actualizado correctamente"})
+
+@app.route("/api_eliminarcriterioimpacto", methods=["POST"])
+def api_eliminarcriterioimpacto():
+    controlador_criterioimpacto.eliminar_criterioimpacto(request.json["id"])
+    return jsonify({"Mensaje":"Criterio Impacto eliminado correctamente"})
 
 #API's CRUD Criterio Impacto - Fin
 
@@ -669,6 +903,20 @@ def api_guardarcriterioprobabilidad():
     controlador_criterioprobabilidad.insertar_criterioprobabilidad(descripcion,valor)
     # De cualquier modo, y si todo fue bien, redireccionar
     return jsonify({"Mensaje":"Criterio Probabilidad registrado correctamente"})
+
+@app.route("/api_actualizarcriterioprobabilidad", methods=["POST"])
+def api_actualizarcriterioprobabilidad():
+    id = request.json["id"]
+    descripcion = request.json["descripcion"]
+    valor = request.json["valor"]
+
+    controlador_criterioprobabilidad.actualizar_criterioprobabilidad(descripcion,valor, id)
+    return jsonify({"Mensaje":"Criterio Probabilidad actualizado correctamente"})
+
+@app.route("/api_eliminarcriterioprobabilidad", methods=["POST"])
+def api_eliminarcriterioprobabilidad():
+    controlador_criterioprobabilidad.eliminar_criterioprobabilidad(request.json["id"])
+    return jsonify({"Mensaje":"Criterio Probabilidad eliminado correctamente"})
 
 
 #API's CRUD Criterio Probabilidad - Fin
@@ -697,6 +945,21 @@ def api_guardarcriterioriesgo():
     # De cualquier modo, y si todo fue bien, redireccionar
     return jsonify({"Mensaje":"Criterio Riesgo registrado correctamente"})
 
+@app.route("/api_actualizarcriterioriesgo", methods=["POST"])
+def api_actualizarcriterioriesgo():
+    id = request.json["id"]
+    descripcion = request.json["descripcion"]
+    valor = request.json["valor"]
+    color = request.json["color"]
+
+    controlador_criterioriesgo.actualizar_criterioriesgo(descripcion,valor,color, id)
+    return jsonify({"Mensaje":"Criterio Riesgo actualizado correctamente"})
+
+@app.route("/api_eliminarcriterioriesgo", methods=["POST"])
+def api_eliminarcriterioriesgo():
+    controlador_criterioriesgo.eliminar_criterioriesgo(request.json["id"])
+    return jsonify({"Mensaje":"Criterio Riesgo eliminado correctamente"})
+
 #API's CRUD Criterio Riesgo - Fin
 
 #API's CRUD Registro Impacto Probabilidad - Inicio
@@ -723,6 +986,24 @@ def api_guardarregistroimpactoprobabilidad():
     controlador_registroimpactoprobabilidad.insertar_registroimpactoprobabilidad(riesgoid,criterioimpactoid,criterioprobabilidadid,criterioriesgoid,uid)
     # De cualquier modo, y si todo fue bien, redireccionar
     return jsonify({"Mensaje":"Registro Impacto Probabilidad registrado correctamente"})
+
+@app.route("/api_actualizarregistroimpactoprobabilidad", methods=["POST"])
+def api_actualizarregistroimpactoprobabilidad():
+    id = request.form["id"]
+    riesgoid = request.form["riesgoid"]
+    criterioimpactoid = request.form["criterioimpactoid"]
+    criterioprobabilidadid = request.form["criterioprobabilidadid"]
+    criterioriesgoid = request.form["criterioriesgoid"]
+    uid = request.form["uid"]
+
+    controlador_riesgo.actualizar_riesgo(riesgoid,criterioimpactoid,criterioprobabilidadid,criterioriesgoid,uid,id)
+    return jsonify({"Mensaje":"Registro Impacto Probabilidad actualizado correctamente"})
+
+@app.route("/api_eliminarregistroimpactoprobabilidad", methods=["POST"])
+def api_eliminarregistroimpactoprobabilidad():
+    controlador_registroimpactoprobabilidad.eliminar_registroimpactoprobabilidad(request.form["id"])
+    return jsonify({"Mensaje":"Registro Impacto Probabilidad eliminado correctamente"})
+
 #API's CRUD Registro Impacto Probabilidad - Fin
 
 

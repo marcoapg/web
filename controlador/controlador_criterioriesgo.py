@@ -30,3 +30,20 @@ def insertar_criterioriesgo(descripcion,valor,color):
                        (descripcion,valor,color))
     conexion.commit()
     conexion.close()    
+
+#(UPDATE)
+def actualizar_criterioriesgo(descripcion,valor,color,id):
+    conexion = obtener_conexion()
+    with conexion.cursor() as cursor:
+        cursor.execute("UPDATE criterio_riesgo SET Descripcion = %s, Valor=%s, Color= %s  WHERE Criterio_RiesgoID = %s",
+                       (descripcion,valor,color, id))
+    conexion.commit()
+    conexion.close()
+
+#(DELETE)
+def eliminar_criterioriesgo(id):
+    conexion = obtener_conexion()
+    with conexion.cursor() as cursor:
+        cursor.execute("DELETE FROM criterio_riesgo WHERE Criterio_RiesgoID = %s", (id,))
+    conexion.commit()
+    conexion.close()

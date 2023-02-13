@@ -1,0 +1,48 @@
+{% extends "maestra.html" %}
+{% block titulo %} Criterio Probabilidad {% endblock %}
+{% block contenido %}
+
+<section class="section">
+    <div class="columns">
+        <div class="column">
+            <h3 class="is-size-3">Criterios Probabilidad</h3>
+            <a href="{{url_for('formulario_agregar_criterioprobabilidad')}}" class="button is-success">Agregar</a>
+
+            <table class="table">
+                <thead>
+                    <tr>
+                        <th>Id</th>
+                        <th>Descripción</th>
+                        <th>Valor</th>
+                        <th>Editar</th>
+                        <th>Eliminar</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for criterioprobabilidad in criteriosprobabilidad %}
+                    <tr>
+                        <td>{{criterioprobabilidad[0]}}</td>
+                        <td>{{criterioprobabilidad[1]}}</td>
+                        <td>{{criterioprobabilidad[2]}}</td>
+                        <td>
+                            {# Pasar el id (lo que hay en juego[0] #}
+                            <a href="{{url_for('editar_criterioprobabilidad', id=criterioprobabilidad[0])}}" class="button is-info">Editar</a>
+                        </td>
+                        <td>
+                            <form action="{{url_for('eliminar_criterioprobabilidad')}}" method="POST">
+                                <input type="hidden" name="id" value="{{criterioprobabilidad[0]}}">
+                                <button class="button is-danger">Eliminar</button>
+                            </form>
+                        </td>
+                    </tr>                    
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+        <div class="column">
+            <h5 class="mb-4">Referencia</h5>
+            <a class="button is-primary is-light mb-4" href="{{url_for('registrosimpactoprobabilidad')}}">Registro Impacto Probabilidad</a>
+        </div>
+    </div>
+</section>
+{% endblock %}
